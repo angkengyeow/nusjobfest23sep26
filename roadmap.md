@@ -7,3 +7,5 @@
 - [x] Store applications + CV files (Lovable Cloud)
 - [x] Head metadata per route
 - [ ] Confirm real event dates, booth number and role details with the recruiter
+- [x] Recruiter dashboard: filter by course/availability/role, download CVs
+- [x] Recruiter sign in (@skyworksinc.com emails auto-approved)
