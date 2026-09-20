@@ -1,3 +1,5 @@
+import { Link } from "@tanstack/react-router";
+
 export function SiteFooter() {
   return (
     <footer className="border-t border-border bg-secondary">
@@ -8,6 +10,12 @@ export function SiteFooter() {
         <p className="text-sm text-muted-foreground">
           NUS Career Fest 2026 · Suntec Convention Centre · Internship opportunities only
         </p>
+        <Link
+          to="/dashboard"
+          className="text-sm font-medium text-muted-foreground transition-colors hover:text-brand-blue"
+        >
+          Recruiter login
+        </Link>
       </div>
     </footer>
   );
