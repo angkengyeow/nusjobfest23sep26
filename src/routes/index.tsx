@@ -33,12 +33,16 @@ function Index() {
             <p className="text-xs font-semibold uppercase tracking-[0.22em] text-primary-foreground/85">
               NUS Career Fest 2026
             </p>
+            <p className="mt-5 inline-flex items-center gap-2 rounded-full bg-primary-foreground/15 px-4 py-1.5 text-sm font-medium text-primary-foreground">
+              <span aria-hidden="true">👋</span> Thank you for visiting our booth!
+            </p>
             <h1 className="mt-5 max-w-[22ch] text-4xl leading-[1.05] sm:text-5xl lg:text-[3.4rem]">
               Powering the wireless world starts with you.
             </h1>
             <p className="mt-5 max-w-[48ch] text-lg text-primary-foreground/90">
-              Skyworks is hiring interns across RF design, manufacturing, test and firmware. Come
-              speak with our engineers at Suntec, then submit your CV here.
+              It's great to meet you. Skyworks is hiring interns across RF design, manufacturing,
+              test and firmware — have a chat with our engineers at Suntec, then leave your CV with
+              us here. Everyone who applies hears back from a real person.
             </p>
 
             <dl className="mt-8 grid max-w-md grid-cols-2 gap-5 text-sm">
@@ -164,10 +168,11 @@ function Index() {
       {/* CTA */}
       <section className="mx-auto max-w-6xl px-5 py-16 lg:py-20">
         <div className="border border-border bg-card p-8 shadow-panel sm:p-12">
-          <h2 className="text-2xl sm:text-3xl">Visiting the fest?</h2>
+          <h2 className="text-2xl sm:text-3xl">Thank you for visiting our booth!</h2>
           <p className="mt-3 max-w-[58ch] text-lg text-muted-foreground">
-            Drop by our booth for a chat with the engineering team, then submit your CV here so we
-            have everything on file.
+            We loved meeting you at NUS Career Fest. Not sure which role fits you best? Apply anyway
+            and tell us what you enjoy — our team reads every application and will point you to the
+            right one.
           </p>
           <Link
             to="/apply"
