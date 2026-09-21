@@ -89,12 +89,22 @@ function DashboardPage() {
 
   const applications = data?.applications ?? [];
 
-  const courses = useMemo(
-    () => [...new Set(applications.map((a) => a.course.trim()))].sort(),
-    [applications],
-  );
-  const availabilities = useMemo(
-    () => [...new Set(applications.map((a) => a.availability.trim()))].sort(),
+  const filtered = useMemo(() => {
+    return applications.filter((a) => {
+      if (course !== "all" && a.course.trim() !== course) return false;
+      if (availability !== "all" && a.availability.trim() !== availability) return false;
+      if (role !== "all" && a.role_applied.trim() !== role) return false;
+      if (search.trim()) {
+        const q = search.trim().toLowerCase();
+        const haystack = `${a.full_name} ${a.email} ${a.phone} ${a.course} ${a.availability} ${a.role_applied}`.toLowerCase();
+        if (!haystack.includes(q)) return false;
+      }
+      return true;
+    });
+  }, [applications, course, availability, role, search]);
+
+  const roles = useMemo(
+    () => [...new Set(applications.map((a) => a.role_applied.trim()))].sort(),
     [applications],
   );
   const grouped = useMemo(() => {
