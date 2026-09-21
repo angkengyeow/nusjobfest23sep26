@@ -266,9 +266,17 @@ function DashboardPage() {
             {isLoading ? "Loading…" : `${filtered.length} of ${applications.length} candidates`}
           </p>
         </div>
-        <button onClick={signOut} className="text-sm font-medium text-brand-blue hover:underline">
-          Sign out
-        </button>
+        <div className="flex items-center gap-4">
+          <button
+            onClick={exportCsv}
+            className="rounded-sm border border-brand-blue px-4 py-2 text-sm font-semibold text-brand-blue transition-colors hover:bg-brand-blue/10"
+          >
+            Export list (CSV)
+          </button>
+          <button onClick={signOut} className="text-sm font-medium text-brand-blue hover:underline">
+            Sign out
+          </button>
+        </div>
       </div>
 
       <div className="mt-8 grid gap-4 border border-border bg-card p-5 sm:grid-cols-2 lg:grid-cols-5">
