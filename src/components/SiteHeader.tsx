@@ -1,6 +1,6 @@
 import { Link } from "@tanstack/react-router";
 import skyworksLogo from "@/assets/skyworks-logo.png";
-import nusLogo from "@/assets/nus-cfg-logo.png";
+
 
 const navLinks = [
   { to: "/", label: "Overview" },
