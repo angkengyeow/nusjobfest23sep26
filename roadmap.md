@@ -12,6 +12,6 @@
 - [x] Browser-to-database CV upload so submissions work without a server
 - [x] Direct anonymous CV upload rule applied to storage
 - [x] Static build verified in browser (home, /roles with 18 roles, /apply deep links)
-- [ ] User: connect GitHub repo in Lovable (+ menu → GitHub → Create repository) — workflow deploys on push
+- [x] GitHub repository connected and deployment workflow added
 - [ ] After repo exists: add the GitHub Pages URL to allowed auth redirect URLs (recruiter sign-in)
 
