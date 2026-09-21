@@ -47,6 +47,31 @@ function RolesPage() {
               </p>
               <h2 className="mt-3 text-2xl">{role.title}</h2>
               <p className="mt-3 text-muted-foreground">{role.blurb}</p>
+
+              <h3 className="mt-6 text-xs font-semibold uppercase tracking-[0.16em] text-brand-blue">
+                Responsibilities
+              </h3>
+              <ul className="mt-3 space-y-2 text-sm text-muted-foreground">
+                {role.responsibilities.map((item) => (
+                  <li key={item} className="flex gap-2">
+                    <span aria-hidden className="mt-2 h-1 w-1 shrink-0 rounded-full bg-brand-green" />
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+
+              <h3 className="mt-6 text-xs font-semibold uppercase tracking-[0.16em] text-brand-blue">
+                Requirements
+              </h3>
+              <ul className="mt-3 space-y-2 text-sm text-muted-foreground">
+                {role.requirements.map((item) => (
+                  <li key={item} className="flex gap-2">
+                    <span aria-hidden className="mt-2 h-1 w-1 shrink-0 rounded-full bg-brand-green" />
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+
               <Link
                 to="/apply"
                 search={{ role: role.title }}
@@ -54,6 +79,7 @@ function RolesPage() {
               >
                 Apply for this role
               </Link>
+
             </div>
 
             <dl className="space-y-4 border-t border-border pt-6 text-sm lg:border-t-0 lg:border-l lg:pt-0 lg:pl-8">
