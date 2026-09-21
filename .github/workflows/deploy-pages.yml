@@ -23,7 +23,6 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 22
-          cache: npm
 
       - name: Install dependencies
         run: npm install
@@ -42,19 +41,18 @@ jobs:
         env:
           GH_PAGES_BUILD: "1"
           GH_PAGES_BASE: ${{ steps.base.outputs.path }}
-          VITE_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}
-          VITE_SUPABASE_PUBLISHABLE_KEY: ${{ secrets.VITE_SUPABASE_PUBLISHABLE_KEY }}
 
       - name: Prepare Pages output
         run: |
-          OUT=.output/public
-          [ -d "$OUT" ] || { echo "static output not found at $OUT"; ls -la; exit 1; }
+          OUT=dist/client
+          [ -f "$OUT/_shell.html" ] || { echo "shell not found at $OUT/_shell.html"; ls -la "$OUT" || true; exit 1; }
+          cp "$OUT/_shell.html" "$OUT/index.html"
+          cp "$OUT/_shell.html" "$OUT/404.html"
           touch "$OUT/.nojekyll"
-          cp "$OUT/index.html" "$OUT/404.html"
 
       - uses: actions/upload-pages-artifact@v3
         with:
-          path: .output/public
+          path: dist/client
 
   deploy:
     needs: build
