@@ -33,12 +33,16 @@ function Index() {
             <p className="text-xs font-semibold uppercase tracking-[0.22em] text-primary-foreground/85">
               NUS Career Fest 2026
             </p>
+            <p className="mt-5 inline-flex items-center gap-2 rounded-full bg-primary-foreground/15 px-4 py-1.5 text-sm font-medium text-primary-foreground">
+              <span aria-hidden="true">👋</span> Thank you for visiting our booth!
+            </p>
             <h1 className="mt-5 max-w-[22ch] text-4xl leading-[1.05] sm:text-5xl lg:text-[3.4rem]">
               Powering the wireless world starts with you.
             </h1>
             <p className="mt-5 max-w-[48ch] text-lg text-primary-foreground/90">
-              Skyworks is hiring interns across RF design, manufacturing, test and firmware. Come
-              speak with our engineers at Suntec, then submit your CV here.
+              It's great to meet you. Skyworks is hiring interns across RF design, manufacturing,
+              test and firmware — have a chat with our engineers at Suntec, then leave your CV with
+              us here. Everyone who applies hears back from a real person.
             </p>
 
             <dl className="mt-8 grid max-w-md grid-cols-2 gap-5 text-sm">
