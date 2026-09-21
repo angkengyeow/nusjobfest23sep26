@@ -34,7 +34,7 @@ function Index() {
               NUS Career Fest 2026
             </p>
             <h1 className="mt-5 max-w-[22ch] text-4xl leading-[1.05] sm:text-5xl lg:text-[3.4rem]">
-              Start your engineering career in wireless.
+              Powering the wireless world starts with you.
             </h1>
             <p className="mt-5 max-w-[48ch] text-lg text-primary-foreground/90">
               Skyworks is hiring interns across RF design, manufacturing, test and firmware. Come
