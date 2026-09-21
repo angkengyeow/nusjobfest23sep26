@@ -92,9 +92,10 @@ function RolesPage() {
                 <dd className="mt-1 font-semibold">{role.location}</dd>
               </div>
               <div>
-                <dt className="text-muted-foreground">Start</dt>
+                <dt className="text-muted-foreground">Start date</dt>
                 <dd className="mt-1 font-semibold">{role.start}</dd>
               </div>
+
               <div>
                 <dt className="text-muted-foreground">We look for</dt>
                 <dd className="mt-1 font-semibold">{role.looking.join(" · ")}</dd>
