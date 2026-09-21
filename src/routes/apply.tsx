@@ -130,7 +130,7 @@ function ApplyPage() {
         throw new Error("We couldn't save your application. Please try again.");
       }
 
-      setReferenceCode(code);
+      setSubmitted(true);
       window.scrollTo(0, 0);
 
     } catch (error) {
