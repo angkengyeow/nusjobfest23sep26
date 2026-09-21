@@ -83,7 +83,7 @@ function RolesPage() {
 
             </div>
 
-            <dl className="space-y-4 rounded-xl bg-secondary p-5 text-sm lg:mt-1">
+            <dl className="space-y-4 self-start rounded-xl bg-secondary p-5 text-sm lg:mt-1">
               <div>
                 <dt className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">Duration</dt>
                 <dd className="mt-1 font-semibold">{role.duration}</dd>
