@@ -142,11 +142,21 @@ function ApplyPage() {
   if (submitted) {
     return (
       <div className="mx-auto max-w-2xl px-5 py-24 text-center">
-        <h1 className="text-3xl sm:text-4xl">Application received</h1>
+        <h1 className="text-3xl sm:text-4xl">Thank you for visiting our booth!</h1>
         <p className="mt-4 text-lg text-muted-foreground">
-          Thank you — your details and CV are with our recruiting team. If your profile fits one of
-          our openings, we'll email you directly with the next steps.
+          Your details and CV are safely with our recruiting team. It was great to meet you at NUS
+          Career Fest — if your profile fits one of our openings, we'll email you directly with the
+          next steps.
         </p>
+        <p className="mt-6 text-muted-foreground">
+          In the meantime, feel free to browse the other internships on offer.
+        </p>
+        <Link
+          to="/roles"
+          className="mt-6 inline-flex items-center rounded-sm bg-primary px-7 py-3 text-sm font-semibold text-primary-foreground transition-colors hover:bg-brand-blue-deep"
+        >
+          See all internships
+        </Link>
       </div>
     );
   }
