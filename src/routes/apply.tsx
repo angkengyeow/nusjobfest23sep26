@@ -1,11 +1,10 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
 import { toast } from "sonner";
 import { z } from "zod";
 
 import { supabase } from "@/integrations/supabase/client";
 import { internships } from "@/lib/internships";
-import { generateReferenceCode } from "@/lib/status";
 
 
 const searchSchema = z.object({
@@ -40,7 +39,7 @@ const labelClass = "text-sm font-medium text-foreground";
 function ApplyPage() {
   const { role } = Route.useSearch();
   const [submitting, setSubmitting] = useState(false);
-  const [referenceCode, setReferenceCode] = useState<string | null>(null);
+  const [submitted, setSubmitted] = useState(false);
   const [cvFile, setCvFile] = useState<File | null>(null);
 
 
@@ -111,7 +110,6 @@ function ApplyPage() {
         throw new Error("We couldn't upload your CV. Please try again.");
       }
 
-      const code = generateReferenceCode();
       const { error: insertError } = await supabase.from("applications").insert({
         full_name: fullName,
         email,
@@ -123,14 +121,13 @@ function ApplyPage() {
         role_applied: roleApplied,
         message: message || null,
         cv_path: cvPath,
-        reference_code: code,
       });
       if (insertError) {
         console.error(insertError);
         throw new Error("We couldn't save your application. Please try again.");
       }
 
-      setReferenceCode(code);
+      setSubmitted(true);
       window.scrollTo(0, 0);
 
     } catch (error) {
@@ -142,27 +139,14 @@ function ApplyPage() {
     }
   }
 
-  if (referenceCode) {
+  if (submitted) {
     return (
       <div className="mx-auto max-w-2xl px-5 py-24 text-center">
         <h1 className="text-3xl sm:text-4xl">Application received</h1>
         <p className="mt-4 text-lg text-muted-foreground">
-          Thank you — your details and CV are with our recruiting team. We'll be in touch by email
-          after the career fest.
+          Thank you — your details and CV are with our recruiting team. If your profile fits one of
+          our openings, we'll email you directly with the next steps.
         </p>
-        <div className="mt-8 border border-border bg-card p-6">
-          <p className="text-xs font-semibold uppercase tracking-[0.22em] text-brand-blue">
-            Your reference code
-          </p>
-          <p className="mt-3 font-mono text-3xl font-semibold tracking-widest">{referenceCode}</p>
-          <p className="mt-3 text-sm text-muted-foreground">
-            Save this code. Enter it with your email on the{" "}
-            <Link to="/status" className="font-medium text-brand-blue hover:underline">
-              status page
-            </Link>{" "}
-            to see how your application is progressing.
-          </p>
-        </div>
       </div>
     );
   }
