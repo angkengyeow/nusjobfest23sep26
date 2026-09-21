@@ -239,80 +239,87 @@ function DashboardPage() {
         </p>
       ) : null}
 
-      <div className="mt-8 space-y-4">
-        {filtered.map((a) => (
-          <article key={a.id} className="border border-border bg-card p-5">
-            <div className="flex flex-wrap items-start justify-between gap-4">
-              <div>
-                <h2 className="font-display text-xl font-semibold">{a.full_name}</h2>
-                <p className="mt-1 text-sm text-muted-foreground">
-                  {a.email} · {a.phone}
-                </p>
-              </div>
-              <div className="flex items-center gap-3">
-                <span className="text-xs text-muted-foreground">
-                  {new Date(a.created_at).toLocaleDateString("en-SG", {
-                    day: "numeric",
-                    month: "short",
-                    year: "numeric",
-                  })}
-                </span>
-                {a.cv_path ? (
-                  <button
-                    onClick={() => downloadCv(a.cv_path!)}
-                    className="rounded-sm bg-primary px-4 py-2 text-xs font-semibold text-primary-foreground transition-colors hover:bg-brand-blue-deep"
-                  >
-                    Download CV
-                  </button>
-                ) : (
-                  <span className="text-xs text-muted-foreground">No CV</span>
-                )}
-              </div>
-            </div>
+      {grouped.map(([roleName, rows]) => (
+        <section key={roleName} className="mt-10">
+          <div className="flex items-baseline gap-3 border-b border-border pb-3">
+            <h2 className="font-display text-2xl font-semibold">{roleName}</h2>
+            <span className="rounded-full bg-brand-blue/10 px-3 py-1 text-xs font-semibold text-brand-blue">
+              {rows.length} {rows.length === 1 ? "candidate" : "candidates"}
+            </span>
+          </div>
 
-            <dl className="mt-4 grid gap-3 text-sm sm:grid-cols-5">
-              <div>
-                <dt className="text-xs uppercase tracking-wide text-muted-foreground">Course</dt>
-                <dd className="mt-1">{a.course}</dd>
-              </div>
-              <div>
-                <dt className="text-xs uppercase tracking-wide text-muted-foreground">Year</dt>
-                <dd className="mt-1">{a.year_of_study ?? "—"}</dd>
-              </div>
-              <div>
-                <dt className="text-xs uppercase tracking-wide text-muted-foreground">
-                  Availability
-                </dt>
-                <dd className="mt-1">{a.availability}</dd>
-              </div>
-              <div>
-                <dt className="text-xs uppercase tracking-wide text-muted-foreground">
-                  Earliest start
-                </dt>
-                <dd className="mt-1">
-                  {a.earliest_start_date
-                    ? new Date(`${a.earliest_start_date}T00:00:00`).toLocaleDateString("en-SG", {
+          <div className="mt-5 space-y-4">
+            {rows.map((a) => (
+              <article key={a.id} className="border border-border bg-card p-5">
+                <div className="flex flex-wrap items-start justify-between gap-4">
+                  <div>
+                    <h3 className="font-display text-xl font-semibold">{a.full_name}</h3>
+                    <p className="mt-1 text-sm text-muted-foreground">
+                      {a.email} · {a.phone}
+                    </p>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <span className="text-xs text-muted-foreground">
+                      {new Date(a.created_at).toLocaleDateString("en-SG", {
                         day: "numeric",
                         month: "short",
                         year: "numeric",
-                      })
-                    : "—"}
-                </dd>
-              </div>
-              <div>
-                <dt className="text-xs uppercase tracking-wide text-muted-foreground">Role</dt>
-                <dd className="mt-1">{a.role_applied}</dd>
-              </div>
-            </dl>
+                      })}
+                    </span>
+                    {a.cv_path ? (
+                      <button
+                        onClick={() => downloadCv(a.cv_path!)}
+                        className="rounded-sm bg-primary px-4 py-2 text-xs font-semibold text-primary-foreground transition-colors hover:bg-brand-blue-deep"
+                      >
+                        Download CV
+                      </button>
+                    ) : (
+                      <span className="text-xs text-muted-foreground">No CV</span>
+                    )}
+                  </div>
+                </div>
 
-            {a.message ? (
-              <p className="mt-4 border-l-2 border-brand-green pl-4 text-sm text-muted-foreground">
-                {a.message}
-              </p>
-            ) : null}
-          </article>
-        ))}
-      </div>
+                <dl className="mt-4 grid gap-3 text-sm sm:grid-cols-4">
+                  <div>
+                    <dt className="text-xs uppercase tracking-wide text-muted-foreground">Course</dt>
+                    <dd className="mt-1">{a.course}</dd>
+                  </div>
+                  <div>
+                    <dt className="text-xs uppercase tracking-wide text-muted-foreground">Year</dt>
+                    <dd className="mt-1">{a.year_of_study ?? "—"}</dd>
+                  </div>
+                  <div>
+                    <dt className="text-xs uppercase tracking-wide text-muted-foreground">
+                      Availability
+                    </dt>
+                    <dd className="mt-1">{a.availability}</dd>
+                  </div>
+                  <div>
+                    <dt className="text-xs uppercase tracking-wide text-muted-foreground">
+                      Earliest start
+                    </dt>
+                    <dd className="mt-1">
+                      {a.earliest_start_date
+                        ? new Date(`${a.earliest_start_date}T00:00:00`).toLocaleDateString("en-SG", {
+                            day: "numeric",
+                            month: "short",
+                            year: "numeric",
+                          })
+                        : "—"}
+                    </dd>
+                  </div>
+                </dl>
+
+                {a.message ? (
+                  <p className="mt-4 border-l-2 border-brand-green pl-4 text-sm text-muted-foreground">
+                    {a.message}
+                  </p>
+                ) : null}
+              </article>
+            ))}
+          </div>
+        </section>
+      ))}
     </div>
   );
 }
