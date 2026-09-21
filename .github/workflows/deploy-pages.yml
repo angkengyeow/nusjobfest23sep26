@@ -45,6 +45,8 @@ jobs:
 
       - name: Prepare Pages output
         run: |
+          echo "--- build output tree (depth 3)"
+          find dist .output -maxdepth 3 -print 2>/dev/null | sort || true
           SHELL_FILE="$(find . -path './node_modules' -prune -o -type f -name '_shell.html' -print -quit)"
           if [ -z "$SHELL_FILE" ]; then
             SHELL_FILE="$(find . -path './node_modules' -prune -o -type f \( -path '*/client/index.html' -o -path '*/public/index.html' \) -print -quit)"
