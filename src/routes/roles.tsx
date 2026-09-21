@@ -9,13 +9,13 @@ export const Route = createFileRoute("/roles")({
       {
         name: "description",
         content:
-          "Four Skyworks engineering internships open to NUS students: RF and analog IC design, process engineering, test engineering and firmware.",
+          "Five Skyworks internships open to NUS students: equipment engineering, facilities engineering, automation (Camline), CAPEX sourcing and data science.",
       },
       { property: "og:title", content: "Internship Openings — Skyworks" },
       {
         property: "og:description",
         content:
-          "Six-month paid engineering internships in Singapore. See requirements and apply with your CV.",
+          "Six-month paid internships in Singapore. See responsibilities, requirements and apply with your CV.",
       },
     ],
   }),
@@ -34,6 +34,7 @@ function RolesPage() {
         every role — tell us which one interests you.
       </p>
 
+
       <div className="mt-12 space-y-6">
         {internships.map((role) => (
           <article
@@ -46,6 +47,31 @@ function RolesPage() {
               </p>
               <h2 className="mt-3 text-2xl">{role.title}</h2>
               <p className="mt-3 text-muted-foreground">{role.blurb}</p>
+
+              <h3 className="mt-6 text-xs font-semibold uppercase tracking-[0.16em] text-brand-blue">
+                Responsibilities
+              </h3>
+              <ul className="mt-3 space-y-2 text-sm text-muted-foreground">
+                {role.responsibilities.map((item) => (
+                  <li key={item} className="flex gap-2">
+                    <span aria-hidden className="mt-2 h-1 w-1 shrink-0 rounded-full bg-brand-green" />
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+
+              <h3 className="mt-6 text-xs font-semibold uppercase tracking-[0.16em] text-brand-blue">
+                Requirements
+              </h3>
+              <ul className="mt-3 space-y-2 text-sm text-muted-foreground">
+                {role.requirements.map((item) => (
+                  <li key={item} className="flex gap-2">
+                    <span aria-hidden className="mt-2 h-1 w-1 shrink-0 rounded-full bg-brand-green" />
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+
               <Link
                 to="/apply"
                 search={{ role: role.title }}
@@ -53,6 +79,7 @@ function RolesPage() {
               >
                 Apply for this role
               </Link>
+
             </div>
 
             <dl className="space-y-4 border-t border-border pt-6 text-sm lg:border-t-0 lg:border-l lg:pt-0 lg:pl-8">
@@ -65,9 +92,10 @@ function RolesPage() {
                 <dd className="mt-1 font-semibold">{role.location}</dd>
               </div>
               <div>
-                <dt className="text-muted-foreground">Start</dt>
+                <dt className="text-muted-foreground">Start date</dt>
                 <dd className="mt-1 font-semibold">{role.start}</dd>
               </div>
+
               <div>
                 <dt className="text-muted-foreground">We look for</dt>
                 <dd className="mt-1 font-semibold">{role.looking.join(" · ")}</dd>
