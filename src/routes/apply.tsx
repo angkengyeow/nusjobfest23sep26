@@ -38,8 +38,9 @@ const labelClass = "text-sm font-medium text-foreground";
 function ApplyPage() {
   const { role } = Route.useSearch();
   const [submitting, setSubmitting] = useState(false);
-  const [done, setDone] = useState(false);
+  const [referenceCode, setReferenceCode] = useState<string | null>(null);
   const [cvFile, setCvFile] = useState<File | null>(null);
+
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -108,6 +109,7 @@ function ApplyPage() {
         throw new Error("We couldn't upload your CV. Please try again.");
       }
 
+      const code = generateReferenceCode();
       const { error: insertError } = await supabase.from("applications").insert({
         full_name: fullName,
         email,
@@ -119,14 +121,16 @@ function ApplyPage() {
         role_applied: roleApplied,
         message: message || null,
         cv_path: cvPath,
+        reference_code: code,
       });
       if (insertError) {
         console.error(insertError);
         throw new Error("We couldn't save your application. Please try again.");
       }
 
-      setDone(true);
+      setReferenceCode(code);
       window.scrollTo(0, 0);
+
     } catch (error) {
       toast.error(
         error instanceof Error ? error.message : "Something went wrong. Please try again.",
