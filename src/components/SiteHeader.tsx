@@ -33,12 +33,6 @@ export function SiteHeader() {
           ))}
         </nav>
 
-        <Link
-          to="/apply"
-          className="ml-auto inline-flex items-center rounded-sm bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground transition-colors hover:bg-brand-blue-deep sm:ml-0"
-        >
-          Submit CV
-        </Link>
       </div>
     </header>
   );
