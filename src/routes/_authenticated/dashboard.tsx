@@ -51,7 +51,7 @@ type ApplicationRow = {
 
 
 const fieldClass =
-  "mt-2 w-full rounded-sm border border-input bg-background px-3 py-2 text-sm outline-none focus:border-brand-blue focus:ring-2 focus:ring-ring/25";
+  "mt-2 w-full rounded-xl border border-input bg-secondary px-3.5 py-2.5 text-sm outline-none transition-all focus:border-brand-blue focus:bg-card focus:ring-2 focus:ring-brand-blue/20";
 
 async function fetchApplications(): Promise<{
   allowed: boolean;
@@ -243,6 +243,7 @@ function DashboardPage() {
     return (
       <div className="mx-auto max-w-2xl px-5 py-24 text-center">
         <h1 className="text-3xl">No access yet</h1>
+        <div className="section-bar mx-auto mt-4" aria-hidden="true" />
         <p className="mt-4 text-muted-foreground">
           Your account isn't marked as part of the recruiting team. Sign in with your
           @skyworks.com work email to review applications.
@@ -262,14 +263,15 @@ function DashboardPage() {
             Recruiting dashboard
           </p>
           <h1 className="mt-3 text-3xl sm:text-4xl">Internship applications</h1>
-          <p className="mt-2 text-muted-foreground">
+          <div className="section-bar mt-4" aria-hidden="true" />
+          <p className="mt-3 text-muted-foreground">
             {isLoading ? "Loading…" : `${filtered.length} of ${applications.length} candidates`}
           </p>
         </div>
         <div className="flex items-center gap-4">
           <button
             onClick={exportCsv}
-            className="rounded-sm border border-brand-blue px-4 py-2 text-sm font-semibold text-brand-blue transition-colors hover:bg-brand-blue/10"
+            className="rounded-full border border-brand-blue px-5 py-2.5 text-sm font-semibold text-brand-blue transition-colors hover:bg-brand-blue/10"
           >
             Export list (CSV)
           </button>
@@ -279,7 +281,8 @@ function DashboardPage() {
         </div>
       </div>
 
-      <div className="mt-8 grid gap-4 border border-border bg-card p-5 sm:grid-cols-2 lg:grid-cols-5">
+      <div className="mt-8 grid gap-4 rounded-2xl border border-border bg-card p-6 shadow-panel sm:grid-cols-2 lg:grid-cols-5">
+
         <label className="block">
           <span className="text-sm font-medium">Search</span>
           <input
