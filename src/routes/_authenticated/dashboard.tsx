@@ -72,7 +72,7 @@ async function fetchApplications(): Promise<{
   const { data, error } = await supabase
     .from("applications")
     .select(
-      "id, full_name, email, phone, course, year_of_study, availability, earliest_start_date, role_applied, message, cv_path, created_at",
+      "id, full_name, email, phone, course, year_of_study, availability, earliest_start_date, role_applied, message, cv_path, created_at, status",
     )
     .order("created_at", { ascending: false });
 
