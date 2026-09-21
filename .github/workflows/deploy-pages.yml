@@ -46,9 +46,21 @@ jobs:
       - name: Prepare Pages output
         run: |
           OUT=dist/client
-          [ -f "$OUT/_shell.html" ] || { echo "shell not found at $OUT/_shell.html"; ls -la "$OUT" || true; exit 1; }
-          cp "$OUT/_shell.html" "$OUT/index.html"
-          cp "$OUT/_shell.html" "$OUT/404.html"
+          echo "--- contents of $OUT"
+          ls -la "$OUT" || true
+          if [ -f "$OUT/_shell.html" ]; then
+            SHELL_FILE="$OUT/_shell.html"
+          elif [ -f "$OUT/index.html" ]; then
+            SHELL_FILE="$OUT/index.html"
+          else
+            SHELL_FILE="$(find "$OUT" -maxdepth 2 -name '*.html' | head -n1)"
+          fi
+          if [ -z "$SHELL_FILE" ]; then
+            echo "No HTML shell produced by the build"; exit 1
+          fi
+          echo "Using shell: $SHELL_FILE"
+          cp "$SHELL_FILE" "$OUT/index.html"
+          cp "$SHELL_FILE" "$OUT/404.html"
           touch "$OUT/.nojekyll"
 
       - uses: actions/upload-pages-artifact@v3
