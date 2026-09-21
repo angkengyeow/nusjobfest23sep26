@@ -45,27 +45,27 @@ jobs:
 
       - name: Prepare Pages output
         run: |
-          OUT=dist/client
-          echo "--- contents of $OUT"
-          ls -la "$OUT" || true
-          if [ -f "$OUT/_shell.html" ]; then
-            SHELL_FILE="$OUT/_shell.html"
-          elif [ -f "$OUT/index.html" ]; then
-            SHELL_FILE="$OUT/index.html"
-          else
-            SHELL_FILE="$(find "$OUT" -maxdepth 2 -name '*.html' | head -n1)"
+          SHELL_FILE="$(find . -path './node_modules' -prune -o -type f -name '_shell.html' -print -quit)"
+          if [ -z "$SHELL_FILE" ]; then
+            SHELL_FILE="$(find . -path './node_modules' -prune -o -type f \( -path '*/client/index.html' -o -path '*/public/index.html' \) -print -quit)"
           fi
           if [ -z "$SHELL_FILE" ]; then
-            echo "No HTML shell produced by the build"; exit 1
+            echo "No HTML shell produced by the build"
+            find . -path './node_modules' -prune -o -maxdepth 4 -type f -print | sort
+            exit 1
           fi
           echo "Using shell: $SHELL_FILE"
-          cp "$SHELL_FILE" "$OUT/index.html"
-          cp "$SHELL_FILE" "$OUT/404.html"
-          touch "$OUT/.nojekyll"
+          SOURCE_DIR="$(dirname "$SHELL_FILE")"
+          mkdir -p pages-dist
+          cp -a "$SOURCE_DIR"/. pages-dist/
+          cp "$SHELL_FILE" pages-dist/index.html
+          cp "$SHELL_FILE" pages-dist/404.html
+          touch pages-dist/.nojekyll
+          ls -la pages-dist
 
       - uses: actions/upload-pages-artifact@v3
         with:
-          path: dist/client
+          path: pages-dist
 
   deploy:
     needs: build
