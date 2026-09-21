@@ -9,13 +9,13 @@ export const Route = createFileRoute("/roles")({
       {
         name: "description",
         content:
-          "Four Skyworks engineering internships open to NUS students: RF and analog IC design, process engineering, test engineering and firmware.",
+          "Five Skyworks internships open to NUS students: equipment engineering, facilities engineering, automation (Camline), CAPEX sourcing and data science.",
       },
       { property: "og:title", content: "Internship Openings — Skyworks" },
       {
         property: "og:description",
         content:
-          "Six-month paid engineering internships in Singapore. See requirements and apply with your CV.",
+          "Six-month paid internships in Singapore. See responsibilities, requirements and apply with your CV.",
       },
     ],
   }),
@@ -33,6 +33,7 @@ function RolesPage() {
         All placements are based in Singapore and run for six months. One application form covers
         every role — tell us which one interests you.
       </p>
+
 
       <div className="mt-12 space-y-6">
         {internships.map((role) => (
