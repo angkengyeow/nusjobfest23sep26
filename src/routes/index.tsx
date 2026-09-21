@@ -46,13 +46,34 @@ function Index() {
   return (
     <div>
       {/* Hero */}
-      <section className="relative overflow-hidden bg-ink text-white">
+      <section className="relative isolate overflow-hidden bg-ink text-white">
+        {/* Artwork woven into the background so it fades into the navy */}
+        <img
+          src={heroLines}
+          alt=""
+          aria-hidden="true"
+          width={1920}
+          height={1440}
+          className="pointer-events-none absolute inset-y-0 right-0 hidden h-full w-[62%] object-cover opacity-[0.28] invert [mask-image:linear-gradient(to_right,transparent,black_55%)] [mask-composite:intersect] [-webkit-mask-image:linear-gradient(to_right,transparent,black_55%)] lg:block"
+        />
+        <img
+          src={heroLines}
+          alt=""
+          aria-hidden="true"
+          width={1920}
+          height={1440}
+          className="pointer-events-none absolute inset-x-0 bottom-0 h-1/2 w-full object-cover opacity-20 invert [mask-image:linear-gradient(to_top,black,transparent)] [-webkit-mask-image:linear-gradient(to_top,black,transparent)] lg:hidden"
+        />
         <div
           aria-hidden="true"
-          className="absolute inset-0 bg-gradient-to-br from-ink via-brand-blue/40 to-brand-green/30 opacity-80"
+          className="absolute inset-0 bg-gradient-to-br from-ink via-brand-blue/40 to-brand-green/25 opacity-75"
         />
-        <div className="relative mx-auto grid max-w-6xl items-center gap-10 px-5 py-16 lg:grid-cols-[1.05fr_0.95fr] lg:py-24">
-          <div>
+        <div
+          aria-hidden="true"
+          className="absolute -right-24 top-1/2 h-[34rem] w-[34rem] -translate-y-1/2 rounded-full bg-brand-green/20 blur-3xl"
+        />
+        <div className="relative mx-auto max-w-6xl px-5 py-20 lg:py-28">
+          <div className="max-w-2xl">
             <p className="inline-flex items-center gap-2.5 rounded-full border border-white/20 bg-white/10 px-4 py-1.5 text-xs font-bold uppercase tracking-[0.18em] backdrop-blur-sm">
               <span aria-hidden="true" className="h-2 w-2 animate-pulse rounded-full bg-brand-green" />
               Thank you for visiting our booth!
