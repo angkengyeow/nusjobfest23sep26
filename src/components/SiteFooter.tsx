@@ -1,6 +1,7 @@
 import { Link } from "@tanstack/react-router";
 import skyworksLogo from "@/assets/skyworks-logo.png";
 import nusLogo from "@/assets/nus-cfg-logo.png";
+import boothQr from "@/assets/booth-qr.png";
 
 export function SiteFooter() {
   return (
