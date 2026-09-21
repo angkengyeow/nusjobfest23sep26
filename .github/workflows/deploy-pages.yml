@@ -20,12 +20,12 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - uses: actions/setup-node@v4
+      - uses: oven-sh/setup-bun@v2
         with:
-          node-version: 22
+          bun-version: latest
 
       - name: Install dependencies
-        run: npm install
+        run: bun install --frozen-lockfile
 
       - name: Compute base path
         id: base
@@ -37,7 +37,7 @@ jobs:
           fi
 
       - name: Build static site
-        run: npm run build:gh
+        run: bun run build:gh
         env:
           GH_PAGES_BUILD: "1"
           GH_PAGES_BASE: ${{ steps.base.outputs.path }}
