@@ -51,7 +51,7 @@ type ApplicationRow = {
 
 
 const fieldClass =
-  "mt-2 w-full rounded-sm border border-input bg-background px-3 py-2 text-sm outline-none focus:border-brand-blue focus:ring-2 focus:ring-ring/25";
+  "mt-2 w-full rounded-xl border border-input bg-secondary px-3.5 py-2.5 text-sm outline-none transition-all focus:border-brand-blue focus:bg-card focus:ring-2 focus:ring-brand-blue/20";
 
 async function fetchApplications(): Promise<{
   allowed: boolean;
@@ -243,6 +243,7 @@ function DashboardPage() {
     return (
       <div className="mx-auto max-w-2xl px-5 py-24 text-center">
         <h1 className="text-3xl">No access yet</h1>
+        <div className="section-bar mx-auto mt-4" aria-hidden="true" />
         <p className="mt-4 text-muted-foreground">
           Your account isn't marked as part of the recruiting team. Sign in with your
           @skyworks.com work email to review applications.
@@ -262,14 +263,15 @@ function DashboardPage() {
             Recruiting dashboard
           </p>
           <h1 className="mt-3 text-3xl sm:text-4xl">Internship applications</h1>
-          <p className="mt-2 text-muted-foreground">
+          <div className="section-bar mt-4" aria-hidden="true" />
+          <p className="mt-3 text-muted-foreground">
             {isLoading ? "Loading…" : `${filtered.length} of ${applications.length} candidates`}
           </p>
         </div>
         <div className="flex items-center gap-4">
           <button
             onClick={exportCsv}
-            className="rounded-sm border border-brand-blue px-4 py-2 text-sm font-semibold text-brand-blue transition-colors hover:bg-brand-blue/10"
+            className="rounded-full border border-brand-blue px-5 py-2.5 text-sm font-semibold text-brand-blue transition-colors hover:bg-brand-blue/10"
           >
             Export list (CSV)
           </button>
@@ -279,7 +281,8 @@ function DashboardPage() {
         </div>
       </div>
 
-      <div className="mt-8 grid gap-4 border border-border bg-card p-5 sm:grid-cols-2 lg:grid-cols-5">
+      <div className="mt-8 grid gap-4 rounded-2xl border border-border bg-card p-6 shadow-panel sm:grid-cols-2 lg:grid-cols-5">
+
         <label className="block">
           <span className="text-sm font-medium">Search</span>
           <input
@@ -351,7 +354,7 @@ function DashboardPage() {
       ) : null}
 
       {!isLoading && filtered.length === 0 ? (
-        <p className="mt-10 border border-dashed border-border p-10 text-center text-muted-foreground">
+        <p className="mt-10 rounded-2xl border border-dashed border-border bg-card p-10 text-center text-muted-foreground">
           No applications match these filters yet.
         </p>
       ) : null}
@@ -367,7 +370,7 @@ function DashboardPage() {
 
           <div className="mt-5 space-y-4">
             {rows.map((a) => (
-              <article key={a.id} className="border border-border bg-card p-5">
+              <article key={a.id} className="rounded-2xl border border-border bg-card p-6 transition-shadow hover:shadow-panel">
                 <div className="flex flex-wrap items-start justify-between gap-4">
                   <div>
                     <h3 className="font-display text-xl font-semibold">{a.full_name}</h3>
@@ -388,7 +391,7 @@ function DashboardPage() {
                       value={a.status}
                       onChange={(e) => updateStatus(a.id, e.target.value as ApplicationStatus)}
                       disabled={savingId === a.id}
-                      className="rounded-sm border border-input bg-background px-2 py-2 text-xs outline-none focus:border-brand-blue focus:ring-2 focus:ring-ring/25 disabled:opacity-60"
+                      className="rounded-xl border border-input bg-secondary px-2.5 py-2 text-xs outline-none transition-all focus:border-brand-blue focus:bg-card focus:ring-2 focus:ring-brand-blue/20 disabled:opacity-60"
                       aria-label={`Status for ${a.full_name}`}
                     >
                       {APPLICATION_STATUSES.map((s) => (
@@ -400,7 +403,7 @@ function DashboardPage() {
                     {a.cv_path ? (
                       <button
                         onClick={() => downloadCv(a.cv_path!)}
-                        className="rounded-sm bg-primary px-4 py-2 text-xs font-semibold text-primary-foreground transition-colors hover:bg-brand-blue-deep"
+                        className="rounded-full bg-primary px-4 py-2 text-xs font-semibold text-primary-foreground transition-colors hover:bg-brand-blue-deep"
                       >
                         Download CV
                       </button>
@@ -410,7 +413,7 @@ function DashboardPage() {
                     <button
                       onClick={() => deleteApplication(a)}
                       disabled={savingId === a.id}
-                      className="rounded-sm border border-destructive px-4 py-2 text-xs font-semibold text-destructive transition-colors hover:bg-destructive/10 disabled:opacity-60"
+                      className="rounded-full border border-destructive px-4 py-2 text-xs font-semibold text-destructive transition-colors hover:bg-destructive/10 disabled:opacity-60"
                     >
                       Delete
                     </button>
