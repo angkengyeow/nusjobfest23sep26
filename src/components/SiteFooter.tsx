@@ -10,10 +10,6 @@ export function SiteFooter() {
           alt="Skyworks"
           className="h-6 w-auto self-start sm:self-center"
         />
-      </div>
-    </footer>
-  );
-}
         <p className="text-sm text-muted-foreground">
           NUS Career Fest 2026 · 23 September, 10am–5pm · Suntec Convention Centre, Level 4, Hall
           401 &amp; 402 · Internships only
