@@ -43,8 +43,8 @@ function Index() {
 
             <dl className="mt-8 grid max-w-md grid-cols-2 gap-5 text-sm">
               <div>
-                <dt className="text-primary-foreground/70">Dates</dt>
-                <dd className="mt-1 font-semibold">4 – 6 February 2026</dd>
+                <dt className="text-primary-foreground/70">Date</dt>
+                <dd className="mt-1 font-semibold">23 September 2026</dd>
               </div>
               <div>
                 <dt className="text-primary-foreground/70">Venue</dt>
