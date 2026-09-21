@@ -354,7 +354,7 @@ function DashboardPage() {
       ) : null}
 
       {!isLoading && filtered.length === 0 ? (
-        <p className="mt-10 border border-dashed border-border p-10 text-center text-muted-foreground">
+        <p className="mt-10 rounded-2xl border border-dashed border-border bg-card p-10 text-center text-muted-foreground">
           No applications match these filters yet.
         </p>
       ) : null}
@@ -370,7 +370,7 @@ function DashboardPage() {
 
           <div className="mt-5 space-y-4">
             {rows.map((a) => (
-              <article key={a.id} className="border border-border bg-card p-5">
+              <article key={a.id} className="rounded-2xl border border-border bg-card p-6 transition-shadow hover:shadow-panel">
                 <div className="flex flex-wrap items-start justify-between gap-4">
                   <div>
                     <h3 className="font-display text-xl font-semibold">{a.full_name}</h3>
@@ -391,7 +391,7 @@ function DashboardPage() {
                       value={a.status}
                       onChange={(e) => updateStatus(a.id, e.target.value as ApplicationStatus)}
                       disabled={savingId === a.id}
-                      className="rounded-sm border border-input bg-background px-2 py-2 text-xs outline-none focus:border-brand-blue focus:ring-2 focus:ring-ring/25 disabled:opacity-60"
+                      className="rounded-xl border border-input bg-secondary px-2.5 py-2 text-xs outline-none transition-all focus:border-brand-blue focus:bg-card focus:ring-2 focus:ring-brand-blue/20 disabled:opacity-60"
                       aria-label={`Status for ${a.full_name}`}
                     >
                       {APPLICATION_STATUSES.map((s) => (
@@ -403,7 +403,7 @@ function DashboardPage() {
                     {a.cv_path ? (
                       <button
                         onClick={() => downloadCv(a.cv_path!)}
-                        className="rounded-sm bg-primary px-4 py-2 text-xs font-semibold text-primary-foreground transition-colors hover:bg-brand-blue-deep"
+                        className="rounded-full bg-primary px-4 py-2 text-xs font-semibold text-primary-foreground transition-colors hover:bg-brand-blue-deep"
                       >
                         Download CV
                       </button>
@@ -413,7 +413,7 @@ function DashboardPage() {
                     <button
                       onClick={() => deleteApplication(a)}
                       disabled={savingId === a.id}
-                      className="rounded-sm border border-destructive px-4 py-2 text-xs font-semibold text-destructive transition-colors hover:bg-destructive/10 disabled:opacity-60"
+                      className="rounded-full border border-destructive px-4 py-2 text-xs font-semibold text-destructive transition-colors hover:bg-destructive/10 disabled:opacity-60"
                     >
                       Delete
                     </button>

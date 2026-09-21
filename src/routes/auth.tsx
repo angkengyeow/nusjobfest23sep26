@@ -26,7 +26,7 @@ export const Route = createFileRoute("/auth")({
 });
 
 const fieldClass =
-  "mt-2 w-full rounded-sm border border-input bg-background px-3 py-2.5 text-sm outline-none transition-colors focus:border-brand-blue focus:ring-2 focus:ring-ring/25";
+  "mt-2 w-full rounded-xl border border-input bg-secondary px-3.5 py-2.5 text-sm outline-none transition-all focus:border-brand-blue focus:bg-card focus:ring-2 focus:ring-brand-blue/20";
 
 function AuthPage() {
   const navigate = useNavigate();
@@ -73,14 +73,15 @@ function AuthPage() {
       <h1 className="mt-4 text-3xl sm:text-4xl">
         {mode === "signin" ? "Sign in" : "Create your account"}
       </h1>
+      <div className="section-bar mt-4" aria-hidden="true" />
       <p className="mt-3 text-muted-foreground">
         For Skyworks staff only. Use your @skyworks.com work email to get access to candidate
         submissions.
       </p>
 
-      <form onSubmit={handleSubmit} className="mt-8 border border-border bg-card p-6">
+      <form onSubmit={handleSubmit} className="mt-8 rounded-3xl border border-border bg-card p-7 shadow-panel">
         <label className="block">
-          <span className="text-sm font-medium">Work email</span>
+          <span className="text-xs font-bold uppercase tracking-[0.14em] text-muted-foreground">Work email</span>
           <input
             type="email"
             required
@@ -91,7 +92,7 @@ function AuthPage() {
           />
         </label>
         <label className="mt-5 block">
-          <span className="text-sm font-medium">Password</span>
+          <span className="text-xs font-bold uppercase tracking-[0.14em] text-muted-foreground">Password</span>
           <input
             type="password"
             required
@@ -104,7 +105,7 @@ function AuthPage() {
         <button
           type="submit"
           disabled={busy}
-          className="mt-7 w-full rounded-sm bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground transition-colors hover:bg-brand-blue-deep disabled:opacity-60"
+          className="mt-7 w-full rounded-xl bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground transition-colors hover:bg-brand-blue-deep disabled:opacity-60"
         >
           {busy ? "Please wait…" : mode === "signin" ? "Sign in" : "Create account"}
         </button>
