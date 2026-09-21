@@ -97,22 +97,16 @@ function DashboardPage() {
     () => [...new Set(applications.map((a) => a.availability.trim()))].sort(),
     [applications],
   );
-  const roles = useMemo(
-    () => [...new Set(applications.map((a) => a.role_applied.trim()))].sort(),
-    [applications],
-  );
-
-  const filtered = applications.filter((a) => {
-    if (course !== "all" && a.course.trim() !== course) return false;
-    if (availability !== "all" && a.availability.trim() !== availability) return false;
-    if (role !== "all" && a.role_applied.trim() !== role) return false;
-    if (search.trim()) {
-      const q = search.trim().toLowerCase();
-      const haystack = `${a.full_name} ${a.email} ${a.phone} ${a.course} ${a.availability} ${a.role_applied}`.toLowerCase();
-      if (!haystack.includes(q)) return false;
+  const grouped = useMemo(() => {
+    const map = new Map<string, ApplicationRow[]>();
+    for (const a of filtered) {
+      const key = a.role_applied.trim() || "Unspecified role";
+      const list = map.get(key);
+      if (list) list.push(a);
+      else map.set(key, [a]);
     }
-    return true;
-  });
+    return [...map.entries()].sort(([a], [b]) => a.localeCompare(b));
+  }, [filtered]);
 
   async function downloadCv(path: string) {
     try {
