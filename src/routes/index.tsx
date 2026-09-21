@@ -1,7 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 
 import heroLines from "@/assets/hero-lines.png";
-import boothQr from "@/assets/booth-qr.png";
 import { internships } from "@/lib/internships";
 
 export const Route = createFileRoute("/")({
@@ -240,17 +239,6 @@ function Index() {
             >
               Submit your application
             </Link>
-          </div>
-          <div className="flex flex-col items-center gap-3 self-start rounded-2xl border border-border bg-background p-6">
-            <img
-              src={boothQr}
-              alt="QR code — scan to open the Skyworks internship site"
-              className="h-40 w-40"
-            />
-            <p className="text-sm font-bold text-ink">Scan to apply</p>
-            <p className="max-w-[18ch] text-center text-xs text-muted-foreground">
-              Point your phone camera here to view our internships
-            </p>
           </div>
         </div>
       </section>
