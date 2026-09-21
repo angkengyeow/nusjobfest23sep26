@@ -407,6 +407,13 @@ function DashboardPage() {
                     ) : (
                       <span className="text-xs text-muted-foreground">No CV</span>
                     )}
+                    <button
+                      onClick={() => deleteApplication(a)}
+                      disabled={savingId === a.id}
+                      className="rounded-sm border border-destructive px-4 py-2 text-xs font-semibold text-destructive transition-colors hover:bg-destructive/10 disabled:opacity-60"
+                    >
+                      Delete
+                    </button>
                   </div>
 
                 </div>
