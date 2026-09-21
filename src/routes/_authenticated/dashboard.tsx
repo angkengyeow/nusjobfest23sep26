@@ -89,6 +89,15 @@ function DashboardPage() {
 
   const applications = data?.applications ?? [];
 
+  const courses = useMemo(
+    () => [...new Set(applications.map((a) => a.course.trim()))].sort(),
+    [applications],
+  );
+  const availabilities = useMemo(
+    () => [...new Set(applications.map((a) => a.availability.trim()))].sort(),
+    [applications],
+  );
+
   const filtered = useMemo(() => {
     return applications.filter((a) => {
       if (course !== "all" && a.course.trim() !== course) return false;
