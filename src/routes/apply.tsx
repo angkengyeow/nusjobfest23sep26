@@ -111,7 +111,6 @@ function ApplyPage() {
         throw new Error("We couldn't upload your CV. Please try again.");
       }
 
-      const code = generateReferenceCode();
       const { error: insertError } = await supabase.from("applications").insert({
         full_name: fullName,
         email,
