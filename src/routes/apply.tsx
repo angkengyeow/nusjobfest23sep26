@@ -40,7 +40,7 @@ const labelClass = "text-sm font-medium text-foreground";
 function ApplyPage() {
   const { role } = Route.useSearch();
   const [submitting, setSubmitting] = useState(false);
-  const [referenceCode, setReferenceCode] = useState<string | null>(null);
+  const [submitted, setSubmitted] = useState(false);
   const [cvFile, setCvFile] = useState<File | null>(null);
 
 
