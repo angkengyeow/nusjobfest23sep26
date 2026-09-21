@@ -124,7 +124,7 @@ function Index() {
                 <h3 className="mt-3 text-xl">{role.title}</h3>
                 <p className="mt-2 text-muted-foreground">{role.blurb}</p>
                 <p className="mt-5 text-sm text-muted-foreground">
-                  {role.duration} · {role.location} · Starts {role.start}
+                  {role.duration} · {role.location} · Start date {role.start.toLowerCase()}
                 </p>
                 <Link
                   to="/apply"
