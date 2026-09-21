@@ -9,7 +9,7 @@ export const Route = createFileRoute("/roles")({
       {
         name: "description",
         content:
-          "Five Skyworks internships open to NUS students: equipment engineering, facilities engineering, automation (Camline), CAPEX sourcing and data science.",
+          "Ten Skyworks internships open to NUS students across equipment, facilities, automation, industrial engineering, IC layout design, manufacturing, sourcing and data science.",
       },
       { property: "og:title", content: "Internship Openings — Skyworks" },
       {
