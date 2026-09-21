@@ -5,7 +5,6 @@ import { z } from "zod";
 
 import { supabase } from "@/integrations/supabase/client";
 import { internships } from "@/lib/internships";
-import { generateReferenceCode } from "@/lib/status";
 
 
 const searchSchema = z.object({
@@ -122,7 +121,6 @@ function ApplyPage() {
         role_applied: roleApplied,
         message: message || null,
         cv_path: cvPath,
-        reference_code: code,
       });
       if (insertError) {
         console.error(insertError);
