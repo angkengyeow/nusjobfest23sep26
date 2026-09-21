@@ -1,6 +1,6 @@
 import { Link } from "@tanstack/react-router";
 import skyworksLogo from "@/assets/skyworks-logo.png";
-import nusLogo from "@/assets/nus-cfg-logo.png";
+
 
 const navLinks = [
   { to: "/", label: "Overview" },
@@ -15,16 +15,10 @@ export function SiteHeader() {
           <img
             src={skyworksLogo}
             alt="Skyworks"
-            className="h-9 w-auto shrink-0"
+            className="h-11 w-auto shrink-0"
           />
         </Link>
 
-        <span className="hidden h-8 w-px bg-border sm:block" aria-hidden="true" />
-        <img
-          src={nusLogo}
-          alt="NUS · Centre for Future-ready Graduates"
-          className="hidden h-9 w-auto sm:block"
-        />
 
         <nav className="ml-auto hidden items-center gap-7 text-sm font-medium text-foreground/75 sm:flex">
           {navLinks.map((link) => (

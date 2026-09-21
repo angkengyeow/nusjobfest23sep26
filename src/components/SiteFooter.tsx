@@ -16,8 +16,9 @@ export function SiteFooter() {
           <img
             src={nusLogo}
             alt="NUS · Centre for Future-ready Graduates"
-            className="h-8 w-auto"
+            className="h-9 w-auto"
           />
+
         </div>
         <p className="text-sm text-muted-foreground md:max-w-xs md:text-center">
           23 September, 10am–5pm · Suntec Convention Centre, Level 4, Hall
