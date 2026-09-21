@@ -159,6 +159,10 @@ function ApplyPage() {
             />
           </label>
           <label className="block">
+            <span className={labelClass}>Earliest start date</span>
+            <input name="earliestStartDate" type="date" required className={fieldClass} />
+          </label>
+          <label className="block">
             <span className={labelClass}>Availability</span>
             <input
               name="availability"
@@ -167,10 +171,6 @@ function ApplyPage() {
               placeholder="6 months, full-time"
               className={fieldClass}
             />
-          </label>
-          <label className="block">
-            <span className={labelClass}>Earliest start date</span>
-            <input name="earliestStartDate" type="date" required className={fieldClass} />
           </label>
           <label className="block">
             <span className={labelClass}>Year of study</span>
