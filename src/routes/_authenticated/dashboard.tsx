@@ -169,6 +169,71 @@ function DashboardPage() {
   }
 
 
+  async function deleteApplication(a: ApplicationRow) {
+    const ok = window.confirm(
+      `Delete ${a.full_name}'s application${a.cv_path ? " and their CV" : ""}? This cannot be undone.`,
+    );
+    if (!ok) return;
+    setSavingId(a.id);
+    if (a.cv_path) {
+      await supabase.storage.from("cvs").remove([a.cv_path]);
+    }
+    const { error } = await supabase.from("applications").delete().eq("id", a.id);
+    setSavingId(null);
+    if (error) {
+      toast.error("Could not delete that application. Please try again.");
+      return;
+    }
+    toast.success("Application deleted.");
+    await queryClient.invalidateQueries({ queryKey: ["applications"] });
+  }
+
+  function exportCsv() {
+    if (filtered.length === 0) {
+      toast.error("There is nothing to export with these filters.");
+      return;
+    }
+    const headers = [
+      "Name",
+      "Email",
+      "Phone",
+      "Course",
+      "Year of study",
+      "Availability",
+      "Earliest start",
+      "Role",
+      "Status",
+      "Submitted",
+      "Message",
+    ];
+    const cell = (value: string | null) => `"${(value ?? "").replace(/"/g, '""')}"`;
+    const rows = filtered.map((a) =>
+      [
+        a.full_name,
+        a.email,
+        a.phone,
+        a.course,
+        a.year_of_study,
+        a.availability,
+        a.earliest_start_date,
+        a.role_applied,
+        STATUS_LABELS[a.status],
+        new Date(a.created_at).toISOString().slice(0, 10),
+        a.message,
+      ]
+        .map(cell)
+        .join(","),
+    );
+    const csv = `\uFEFF${[headers.map(cell).join(","), ...rows].join("\r\n")}`;
+    const url = URL.createObjectURL(new Blob([csv], { type: "text/csv;charset=utf-8;" }));
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = `skyworks-applications-${new Date().toISOString().slice(0, 10)}.csv`;
+    link.click();
+    URL.revokeObjectURL(url);
+    toast.success(`Exported ${filtered.length} candidates.`);
+  }
+
   async function signOut() {
     await supabase.auth.signOut();
     navigate({ to: "/" });
@@ -201,9 +266,17 @@ function DashboardPage() {
             {isLoading ? "Loading…" : `${filtered.length} of ${applications.length} candidates`}
           </p>
         </div>
-        <button onClick={signOut} className="text-sm font-medium text-brand-blue hover:underline">
-          Sign out
-        </button>
+        <div className="flex items-center gap-4">
+          <button
+            onClick={exportCsv}
+            className="rounded-sm border border-brand-blue px-4 py-2 text-sm font-semibold text-brand-blue transition-colors hover:bg-brand-blue/10"
+          >
+            Export list (CSV)
+          </button>
+          <button onClick={signOut} className="text-sm font-medium text-brand-blue hover:underline">
+            Sign out
+          </button>
+        </div>
       </div>
 
       <div className="mt-8 grid gap-4 border border-border bg-card p-5 sm:grid-cols-2 lg:grid-cols-5">
@@ -334,6 +407,13 @@ function DashboardPage() {
                     ) : (
                       <span className="text-xs text-muted-foreground">No CV</span>
                     )}
+                    <button
+                      onClick={() => deleteApplication(a)}
+                      disabled={savingId === a.id}
+                      className="rounded-sm border border-destructive px-4 py-2 text-xs font-semibold text-destructive transition-colors hover:bg-destructive/10 disabled:opacity-60"
+                    >
+                      Delete
+                    </button>
                   </div>
 
                 </div>
