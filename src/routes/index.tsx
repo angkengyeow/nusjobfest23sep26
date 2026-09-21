@@ -213,19 +213,32 @@ function Index() {
 
       {/* CTA */}
       <section className="mx-auto max-w-6xl px-5 py-16 lg:py-20">
-        <div className="rounded-3xl border border-border bg-card p-8 shadow-panel sm:p-12">
-          <h2 className="text-2xl sm:text-3xl">Thank you for visiting our booth!</h2>
-          <p className="mt-3 max-w-[58ch] text-lg leading-relaxed text-muted-foreground">
-            We loved meeting you at NUS Career Fest. Not sure which role fits you best? Apply anyway
-            and tell us what you enjoy — our team reads every application and will point you to the
-            right one.
-          </p>
-          <Link
-            to="/apply"
-            className="mt-7 inline-flex items-center rounded-xl bg-primary px-7 py-3.5 text-sm font-bold text-primary-foreground transition-all hover:bg-ink hover:shadow-xl"
-          >
-            Submit your application
-          </Link>
+        <div className="flex flex-col gap-8 rounded-3xl border border-border bg-card p-8 shadow-panel sm:p-12 lg:flex-row lg:items-center">
+          <div className="flex-1">
+            <h2 className="text-2xl sm:text-3xl">Thank you for visiting our booth!</h2>
+            <p className="mt-3 max-w-[58ch] text-lg leading-relaxed text-muted-foreground">
+              We loved meeting you at NUS Career Fest. Not sure which role fits you best? Apply anyway
+              and tell us what you enjoy — our team reads every application and will point you to the
+              right one.
+            </p>
+            <Link
+              to="/apply"
+              className="mt-7 inline-flex items-center rounded-xl bg-primary px-7 py-3.5 text-sm font-bold text-primary-foreground transition-all hover:bg-ink hover:shadow-xl"
+            >
+              Submit your application
+            </Link>
+          </div>
+          <div className="flex flex-col items-center gap-3 self-start rounded-2xl border border-border bg-background p-6">
+            <img
+              src={boothQr}
+              alt="QR code — scan to open the Skyworks internship site"
+              className="h-40 w-40"
+            />
+            <p className="text-sm font-bold text-ink">Scan to apply</p>
+            <p className="max-w-[18ch] text-center text-xs text-muted-foreground">
+              Point your phone camera here to view our internships
+            </p>
+          </div>
         </div>
       </section>
     </div>
