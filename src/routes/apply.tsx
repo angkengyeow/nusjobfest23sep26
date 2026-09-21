@@ -33,8 +33,8 @@ export const Route = createFileRoute("/apply")({
 });
 
 const fieldClass =
-  "mt-2 w-full rounded-sm border border-input bg-background px-3 py-2.5 text-sm outline-none transition-colors focus:border-brand-blue focus:ring-2 focus:ring-ring/25";
-const labelClass = "text-sm font-medium text-foreground";
+  "mt-2 w-full rounded-xl border border-input bg-secondary px-3.5 py-2.5 text-sm outline-none transition-all focus:border-brand-blue focus:bg-card focus:ring-2 focus:ring-brand-blue/20";
+const labelClass = "text-xs font-bold uppercase tracking-[0.14em] text-muted-foreground";
 
 function ApplyPage() {
   const { role } = Route.useSearch();
