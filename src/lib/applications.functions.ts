@@ -7,7 +7,11 @@ const applicationSchema = z.object({
   phone: z.string().trim().min(6, "Please enter a contact number").max(30),
   course: z.string().trim().min(2, "Please enter your course or major").max(150),
   yearOfStudy: z.string().trim().max(50).optional().default(""),
-  availability: z.string().trim().min(2, "Please tell us when you can start").max(150),
+  availability: z.string().trim().min(2, "Please tell us your availability").max(150),
+  earliestStartDate: z
+    .string()
+    .trim()
+    .regex(/^\d{4}-\d{2}-\d{2}$/, "Please pick your earliest start date"),
   roleApplied: z.string().trim().min(2).max(150),
   message: z.string().trim().max(1000).optional().default(""),
   cvName: z.string().trim().max(200).optional().default(""),
@@ -49,6 +53,7 @@ export const submitApplication = createServerFn({ method: "POST" })
       course: data.course,
       year_of_study: data.yearOfStudy || null,
       availability: data.availability,
+      earliest_start_date: data.earliestStartDate || null,
       role_applied: data.roleApplied,
       message: data.message || null,
       cv_path: cvPath,
