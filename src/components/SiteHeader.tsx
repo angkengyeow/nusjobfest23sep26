@@ -27,14 +27,11 @@ export function SiteHeader() {
         </Link>
 
         <span className="hidden h-8 w-px bg-border sm:block" aria-hidden="true" />
-        <span className="hidden flex-col leading-none sm:flex">
-          <span className="font-display text-sm font-bold tracking-[0.18em] text-foreground/80">
-            NUS
-          </span>
-          <span className="mt-1.5 text-[10px] font-medium uppercase tracking-[0.2em] text-muted-foreground">
-            Career Fest 2026
-          </span>
-        </span>
+        <img
+          src={nusLogo.url}
+          alt="NUS · Centre for Future-ready Graduates"
+          className="hidden h-9 w-auto sm:block"
+        />
 
         <nav className="ml-auto hidden items-center gap-7 text-sm font-medium text-foreground/75 sm:flex">
           {navLinks.map((link) => (
