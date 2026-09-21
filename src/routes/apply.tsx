@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
 import { toast } from "sonner";
+import { z } from "zod";
 
 import { supabase } from "@/integrations/supabase/client";
 import { internships } from "@/lib/internships";
@@ -9,7 +10,6 @@ const searchSchema = z.object({
   role: z.string().optional(),
 });
 
-import { z } from "zod";
 
 export const Route = createFileRoute("/apply")({
   validateSearch: searchSchema,
