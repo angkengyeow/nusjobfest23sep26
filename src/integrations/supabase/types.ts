@@ -26,7 +26,10 @@ export type Database = {
           id: string
           message: string | null
           phone: string
+          reference_code: string | null
           role_applied: string
+          status: Database["public"]["Enums"]["application_status"]
+          status_updated_at: string
           year_of_study: string | null
         }
         Insert: {
@@ -40,7 +43,10 @@ export type Database = {
           id?: string
           message?: string | null
           phone: string
+          reference_code?: string | null
           role_applied: string
+          status?: Database["public"]["Enums"]["application_status"]
+          status_updated_at?: string
           year_of_study?: string | null
         }
         Update: {
@@ -54,7 +60,10 @@ export type Database = {
           id?: string
           message?: string | null
           phone?: string
+          reference_code?: string | null
           role_applied?: string
+          status?: Database["public"]["Enums"]["application_status"]
+          status_updated_at?: string
           year_of_study?: string | null
         }
         Relationships: []
@@ -85,6 +94,15 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      get_application_status: {
+        Args: { _email: string; _reference_code: string }
+        Returns: {
+          role_applied: string
+          status: Database["public"]["Enums"]["application_status"]
+          status_updated_at: string
+          submitted_at: string
+        }[]
+      }
       has_role: {
         Args: {
           _role: Database["public"]["Enums"]["app_role"]
@@ -95,6 +113,12 @@ export type Database = {
     }
     Enums: {
       app_role: "admin" | "recruiter"
+      application_status:
+        | "new"
+        | "shortlisted"
+        | "interviewed"
+        | "rejected"
+        | "hired"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -223,6 +247,13 @@ export const Constants = {
   public: {
     Enums: {
       app_role: ["admin", "recruiter"],
+      application_status: [
+        "new",
+        "shortlisted",
+        "interviewed",
+        "rejected",
+        "hired",
+      ],
     },
   },
 } as const

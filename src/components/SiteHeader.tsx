@@ -4,6 +4,8 @@ const navLinks = [
   { to: "/", label: "Overview" },
   { to: "/roles", label: "Internships" },
   { to: "/apply", label: "Apply" },
+  { to: "/status", label: "My status" },
+
 ] as const;
 
 export function SiteHeader() {

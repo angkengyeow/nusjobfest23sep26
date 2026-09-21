@@ -15,4 +15,6 @@
 - [x] GitHub repository connected and deployment workflow added
 - [x] GitHub Pages deployment successful and public site verified
 - [ ] After repo exists: add the GitHub Pages URL to allowed auth redirect URLs (recruiter sign-in)
+- [x] Application status: recruiter controls (new/shortlisted/interviewed/rejected/hired) + student status lookup by email + private reference code (no guessing)
+
 

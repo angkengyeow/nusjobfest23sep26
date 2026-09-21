@@ -1,9 +1,16 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useMemo, useState } from "react";
 import { toast } from "sonner";
 
 import { supabase } from "@/integrations/supabase/client";
+import {
+  APPLICATION_STATUSES,
+  STATUS_LABELS,
+  statusBadgeClass,
+  type ApplicationStatus,
+} from "@/lib/status";
+
 
 export const Route = createFileRoute("/_authenticated/dashboard")({
   head: () => ({
@@ -39,7 +46,9 @@ type ApplicationRow = {
   message: string | null;
   cv_path: string | null;
   created_at: string;
+  status: ApplicationStatus;
 };
+
 
 const fieldClass =
   "mt-2 w-full rounded-sm border border-input bg-background px-3 py-2 text-sm outline-none focus:border-brand-blue focus:ring-2 focus:ring-ring/25";
@@ -63,7 +72,7 @@ async function fetchApplications(): Promise<{
   const { data, error } = await supabase
     .from("applications")
     .select(
-      "id, full_name, email, phone, course, year_of_study, availability, earliest_start_date, role_applied, message, cv_path, created_at",
+      "id, full_name, email, phone, course, year_of_study, availability, earliest_start_date, role_applied, message, cv_path, created_at, status",
     )
     .order("created_at", { ascending: false });
 
@@ -81,11 +90,15 @@ function DashboardPage() {
   const [course, setCourse] = useState("all");
   const [availability, setAvailability] = useState("all");
   const [role, setRole] = useState("all");
+  const [statusFilter, setStatusFilter] = useState("all");
+  const [savingId, setSavingId] = useState<string | null>(null);
+  const queryClient = useQueryClient();
 
   const { data, isLoading, error } = useQuery({
     queryKey: ["applications"],
     queryFn: fetchApplications,
   });
+
 
   const applications = data?.applications ?? [];
 
@@ -103,6 +116,7 @@ function DashboardPage() {
       if (course !== "all" && a.course.trim() !== course) return false;
       if (availability !== "all" && a.availability.trim() !== availability) return false;
       if (role !== "all" && a.role_applied.trim() !== role) return false;
+      if (statusFilter !== "all" && a.status !== statusFilter) return false;
       if (search.trim()) {
         const q = search.trim().toLowerCase();
         const haystack = `${a.full_name} ${a.email} ${a.phone} ${a.course} ${a.availability} ${a.role_applied}`.toLowerCase();
@@ -110,7 +124,8 @@ function DashboardPage() {
       }
       return true;
     });
-  }, [applications, course, availability, role, search]);
+  }, [applications, course, availability, role, search, statusFilter]);
+
 
   const roles = useMemo(
     () => [...new Set(applications.map((a) => a.role_applied.trim()))].sort(),
@@ -140,6 +155,19 @@ function DashboardPage() {
       toast.error(err instanceof Error ? err.message : "Could not download that CV.");
     }
   }
+
+  async function updateStatus(id: string, next: ApplicationStatus) {
+    setSavingId(id);
+    const { error } = await supabase.from("applications").update({ status: next }).eq("id", id);
+    setSavingId(null);
+    if (error) {
+      toast.error("Could not update that status. Please try again.");
+      return;
+    }
+    toast.success(`Marked as ${STATUS_LABELS[next].toLowerCase()}.`);
+    await queryClient.invalidateQueries({ queryKey: ["applications"] });
+  }
+
 
   async function signOut() {
     await supabase.auth.signOut();
@@ -178,7 +206,7 @@ function DashboardPage() {
         </button>
       </div>
 
-      <div className="mt-8 grid gap-4 border border-border bg-card p-5 sm:grid-cols-2 lg:grid-cols-4">
+      <div className="mt-8 grid gap-4 border border-border bg-card p-5 sm:grid-cols-2 lg:grid-cols-5">
         <label className="block">
           <span className="text-sm font-medium">Search</span>
           <input
@@ -225,6 +253,22 @@ function DashboardPage() {
             ))}
           </select>
         </label>
+        <label className="block">
+          <span className="text-sm font-medium">Status</span>
+          <select
+            value={statusFilter}
+            onChange={(e) => setStatusFilter(e.target.value)}
+            className={fieldClass}
+          >
+            <option value="all">All statuses</option>
+            {APPLICATION_STATUSES.map((s) => (
+              <option key={s} value={s}>
+                {STATUS_LABELS[s]}
+              </option>
+            ))}
+          </select>
+        </label>
+
       </div>
 
       {error ? (
@@ -258,7 +302,7 @@ function DashboardPage() {
                       {a.email} · {a.phone}
                     </p>
                   </div>
-                  <div className="flex items-center gap-3">
+                  <div className="flex flex-wrap items-center gap-3">
                     <span className="text-xs text-muted-foreground">
                       {new Date(a.created_at).toLocaleDateString("en-SG", {
                         day: "numeric",
@@ -266,6 +310,20 @@ function DashboardPage() {
                         year: "numeric",
                       })}
                     </span>
+                    <span className={statusBadgeClass(a.status)}>{STATUS_LABELS[a.status]}</span>
+                    <select
+                      value={a.status}
+                      onChange={(e) => updateStatus(a.id, e.target.value as ApplicationStatus)}
+                      disabled={savingId === a.id}
+                      className="rounded-sm border border-input bg-background px-2 py-2 text-xs outline-none focus:border-brand-blue focus:ring-2 focus:ring-ring/25 disabled:opacity-60"
+                      aria-label={`Status for ${a.full_name}`}
+                    >
+                      {APPLICATION_STATUSES.map((s) => (
+                        <option key={s} value={s}>
+                          {STATUS_LABELS[s]}
+                        </option>
+                      ))}
+                    </select>
                     {a.cv_path ? (
                       <button
                         onClick={() => downloadCv(a.cv_path!)}
@@ -277,6 +335,7 @@ function DashboardPage() {
                       <span className="text-xs text-muted-foreground">No CV</span>
                     )}
                   </div>
+
                 </div>
 
                 <dl className="mt-4 grid gap-3 text-sm sm:grid-cols-4">
