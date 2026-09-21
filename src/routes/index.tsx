@@ -168,10 +168,11 @@ function Index() {
       {/* CTA */}
       <section className="mx-auto max-w-6xl px-5 py-16 lg:py-20">
         <div className="border border-border bg-card p-8 shadow-panel sm:p-12">
-          <h2 className="text-2xl sm:text-3xl">Visiting the fest?</h2>
+          <h2 className="text-2xl sm:text-3xl">Thank you for visiting our booth!</h2>
           <p className="mt-3 max-w-[58ch] text-lg text-muted-foreground">
-            Drop by our booth for a chat with the engineering team, then submit your CV here so we
-            have everything on file.
+            We loved meeting you at NUS Career Fest. Not sure which role fits you best? Apply anyway
+            and tell us what you enjoy — our team reads every application and will point you to the
+            right one.
           </p>
           <Link
             to="/apply"
