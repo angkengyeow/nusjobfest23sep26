@@ -41,6 +41,7 @@ jobs:
         env:
           GH_PAGES_BUILD: "1"
           GH_PAGES_BASE: ${{ steps.base.outputs.path }}
+          NODE_OPTIONS: "--max-old-space-size=4608"
 
       - name: Prepare Pages output
         run: |
