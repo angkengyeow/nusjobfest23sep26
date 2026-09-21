@@ -1,15 +1,15 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useServerFn } from "@tanstack/react-start";
 import { useState } from "react";
 import { toast } from "sonner";
-import { z } from "zod";
 
-import { submitApplication } from "@/lib/applications.functions";
+import { supabase } from "@/integrations/supabase/client";
 import { internships } from "@/lib/internships";
 
 const searchSchema = z.object({
   role: z.string().optional(),
 });
+
+import { z } from "zod";
 
 export const Route = createFileRoute("/apply")({
   validateSearch: searchSchema,
@@ -35,21 +35,8 @@ const fieldClass =
   "mt-2 w-full rounded-sm border border-input bg-background px-3 py-2.5 text-sm outline-none transition-colors focus:border-brand-blue focus:ring-2 focus:ring-ring/25";
 const labelClass = "text-sm font-medium text-foreground";
 
-function fileToBase64(file: File): Promise<string> {
-  return new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    reader.onload = () => {
-      const result = String(reader.result);
-      resolve(result.slice(result.indexOf(",") + 1));
-    };
-    reader.onerror = () => reject(new Error("Could not read that file"));
-    reader.readAsDataURL(file);
-  });
-}
-
 function ApplyPage() {
   const { role } = Route.useSearch();
-  const send = useServerFn(submitApplication);
   const [submitting, setSubmitting] = useState(false);
   const [done, setDone] = useState(false);
   const [cvFile, setCvFile] = useState<File | null>(null);
@@ -68,26 +55,78 @@ function ApplyPage() {
       return;
     }
 
+    const fullName = String(values.get("fullName") ?? "").trim();
+    const email = String(values.get("email") ?? "").trim();
+    const phone = String(values.get("phone") ?? "").trim();
+    const course = String(values.get("course") ?? "").trim();
+    const yearOfStudy = String(values.get("yearOfStudy") ?? "").trim();
+    const availability = String(values.get("availability") ?? "").trim();
+    const earliestStartDate = String(values.get("earliestStartDate") ?? "").trim();
+    const roleApplied = String(values.get("roleApplied") ?? "").trim();
+    const message = String(values.get("message") ?? "").trim();
+
+    if (fullName.length < 2) {
+      toast.error("Please enter your full name.");
+      return;
+    }
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      toast.error("Please enter a valid email address.");
+      return;
+    }
+    if (phone.length < 6) {
+      toast.error("Please enter your contact number.");
+      return;
+    }
+    if (course.length < 2) {
+      toast.error("Please enter your course or major.");
+      return;
+    }
+    if (availability.length < 2) {
+      toast.error("Please tell us your availability.");
+      return;
+    }
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(earliestStartDate)) {
+      toast.error("Please pick your earliest start date.");
+      return;
+    }
+    if (roleApplied.length < 2) {
+      toast.error("Please choose the role you're applying for.");
+      return;
+    }
+
     setSubmitting(true);
     try {
-      const cvBase64 = await fileToBase64(cvFile);
-      await send({
-        data: {
-          fullName: String(values.get("fullName") ?? ""),
-          email: String(values.get("email") ?? ""),
-          phone: String(values.get("phone") ?? ""),
-          course: String(values.get("course") ?? ""),
-          yearOfStudy: String(values.get("yearOfStudy") ?? ""),
-          availability: String(values.get("availability") ?? ""),
-          earliestStartDate: String(values.get("earliestStartDate") ?? ""),
-          roleApplied: String(values.get("roleApplied") ?? ""),
-          message: String(values.get("message") ?? ""),
-          cvName: cvFile.name,
-          cvType: cvFile.type,
-          cvBase64,
-        },
+      const safeName = cvFile.name.replace(/[^a-zA-Z0-9._-]/g, "_").slice(-80);
+      const cvPath = `${new Date().toISOString().slice(0, 10)}/${crypto.randomUUID()}-${safeName}`;
+
+      const { error: uploadError } = await supabase.storage.from("cvs").upload(cvPath, cvFile, {
+        contentType: cvFile.type || "application/octet-stream",
+        upsert: false,
       });
+      if (uploadError) {
+        console.error(uploadError);
+        throw new Error("We couldn't upload your CV. Please try again.");
+      }
+
+      const { error: insertError } = await supabase.from("applications").insert({
+        full_name: fullName,
+        email,
+        phone,
+        course,
+        year_of_study: yearOfStudy || null,
+        availability,
+        earliest_start_date: earliestStartDate || null,
+        role_applied: roleApplied,
+        message: message || null,
+        cv_path: cvPath,
+      });
+      if (insertError) {
+        console.error(insertError);
+        throw new Error("We couldn't save your application. Please try again.");
+      }
+
       setDone(true);
+      window.scrollTo(0, 0);
     } catch (error) {
       toast.error(
         error instanceof Error ? error.message : "Something went wrong. Please try again.",
