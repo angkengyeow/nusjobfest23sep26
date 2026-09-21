@@ -152,14 +152,6 @@ function Index() {
               </Link>
             </div>
           </div>
-
-          <img
-            src={heroLines}
-            alt=""
-            width={1920}
-            height={1440}
-            className="mx-auto w-full max-w-md opacity-80 invert lg:max-w-full"
-          />
         </div>
       </section>
 
