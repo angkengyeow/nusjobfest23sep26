@@ -20,6 +20,7 @@ export type Database = {
           course: string
           created_at: string
           cv_path: string | null
+          earliest_start_date: string | null
           email: string
           full_name: string
           id: string
@@ -33,6 +34,7 @@ export type Database = {
           course: string
           created_at?: string
           cv_path?: string | null
+          earliest_start_date?: string | null
           email: string
           full_name: string
           id?: string
@@ -46,6 +48,7 @@ export type Database = {
           course?: string
           created_at?: string
           cv_path?: string | null
+          earliest_start_date?: string | null
           email?: string
           full_name?: string
           id?: string

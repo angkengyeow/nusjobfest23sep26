@@ -10,6 +10,7 @@ export type ApplicationRow = {
   course: string;
   year_of_study: string | null;
   availability: string;
+  earliest_start_date: string | null;
   role_applied: string;
   message: string | null;
   cv_path: string | null;
@@ -39,7 +40,7 @@ export const listApplications = createServerFn({ method: "GET" })
     const { data, error } = await supabase
       .from("applications")
       .select(
-        "id, full_name, email, phone, course, year_of_study, availability, role_applied, message, cv_path, created_at",
+        "id, full_name, email, phone, course, year_of_study, availability, earliest_start_date, role_applied, message, cv_path, created_at",
       )
       .order("created_at", { ascending: false });
 

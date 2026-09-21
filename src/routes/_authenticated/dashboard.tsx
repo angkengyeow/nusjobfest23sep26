@@ -211,7 +211,7 @@ function DashboardPage() {
               </div>
             </div>
 
-            <dl className="mt-4 grid gap-3 text-sm sm:grid-cols-4">
+            <dl className="mt-4 grid gap-3 text-sm sm:grid-cols-5">
               <div>
                 <dt className="text-xs uppercase tracking-wide text-muted-foreground">Course</dt>
                 <dd className="mt-1">{a.course}</dd>
@@ -225,6 +225,20 @@ function DashboardPage() {
                   Availability
                 </dt>
                 <dd className="mt-1">{a.availability}</dd>
+              </div>
+              <div>
+                <dt className="text-xs uppercase tracking-wide text-muted-foreground">
+                  Earliest start
+                </dt>
+                <dd className="mt-1">
+                  {a.earliest_start_date
+                    ? new Date(`${a.earliest_start_date}T00:00:00`).toLocaleDateString("en-SG", {
+                        day: "numeric",
+                        month: "short",
+                        year: "numeric",
+                      })
+                    : "—"}
+                </dd>
               </div>
               <div>
                 <dt className="text-xs uppercase tracking-wide text-muted-foreground">Role</dt>
