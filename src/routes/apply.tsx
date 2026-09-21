@@ -79,6 +79,7 @@ function ApplyPage() {
           course: String(values.get("course") ?? ""),
           yearOfStudy: String(values.get("yearOfStudy") ?? ""),
           availability: String(values.get("availability") ?? ""),
+          earliestStartDate: String(values.get("earliestStartDate") ?? ""),
           roleApplied: String(values.get("roleApplied") ?? ""),
           message: String(values.get("message") ?? ""),
           cvName: cvFile.name,
@@ -158,6 +159,20 @@ function ApplyPage() {
             />
           </label>
           <label className="block">
+            <span className={labelClass}>Availability</span>
+            <input
+              name="availability"
+              required
+              maxLength={150}
+              placeholder="6 months, full-time"
+              className={fieldClass}
+            />
+          </label>
+          <label className="block">
+            <span className={labelClass}>Earliest start date</span>
+            <input name="earliestStartDate" type="date" required className={fieldClass} />
+          </label>
+          <label className="block">
             <span className={labelClass}>Year of study</span>
             <select name="yearOfStudy" className={fieldClass} defaultValue="Year 3">
               <option>Year 1</option>
@@ -168,16 +183,6 @@ function ApplyPage() {
             </select>
           </label>
           <label className="block">
-            <span className={labelClass}>Availability / earliest start</span>
-            <input
-              name="availability"
-              required
-              maxLength={150}
-              placeholder="From May 2026, 6 months"
-              className={fieldClass}
-            />
-          </label>
-          <label className="block sm:col-span-2">
             <span className={labelClass}>Role of interest</span>
             <select name="roleApplied" className={fieldClass} defaultValue={role ?? internships[0]!.title}>
               {internships.map((item) => (
