@@ -8,7 +8,7 @@ export function SiteFooter() {
         <img
           src={skyworksLogo.url}
           alt="Skyworks"
-          className="h-6 w-auto self-start sm:self-center"
+          className="h-7 w-auto self-start sm:self-center"
         />
         <p className="text-sm text-muted-foreground">
           NUS Career Fest 2026 · 23 September, 10am–5pm · Suntec Convention Centre, Level 4, Hall
