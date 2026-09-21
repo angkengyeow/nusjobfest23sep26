@@ -1,11 +1,9 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
-import { useServerFn } from "@tanstack/react-start";
 import { useMemo, useState } from "react";
 import { toast } from "sonner";
 
 import { supabase } from "@/integrations/supabase/client";
-import { getCvDownloadUrl, listApplications } from "@/lib/dashboard.functions";
 
 export const Route = createFileRoute("/_authenticated/dashboard")({
   head: () => ({
@@ -28,13 +26,56 @@ export const Route = createFileRoute("/_authenticated/dashboard")({
   component: DashboardPage,
 });
 
+type ApplicationRow = {
+  id: string;
+  full_name: string;
+  email: string;
+  phone: string;
+  course: string;
+  year_of_study: string | null;
+  availability: string;
+  earliest_start_date: string | null;
+  role_applied: string;
+  message: string | null;
+  cv_path: string | null;
+  created_at: string;
+};
+
 const fieldClass =
   "mt-2 w-full rounded-sm border border-input bg-background px-3 py-2 text-sm outline-none focus:border-brand-blue focus:ring-2 focus:ring-ring/25";
 
+async function fetchApplications(): Promise<{
+  allowed: boolean;
+  applications: ApplicationRow[];
+}> {
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+  if (!user) return { allowed: false, applications: [] };
+
+  const [recruiter, admin] = await Promise.all([
+    supabase.rpc("has_role", { _user_id: user.id, _role: "recruiter" }),
+    supabase.rpc("has_role", { _user_id: user.id, _role: "admin" }),
+  ]);
+  const allowed = recruiter.data === true || admin.data === true;
+  if (!allowed) return { allowed: false, applications: [] };
+
+  const { data, error } = await supabase
+    .from("applications")
+    .select(
+      "id, full_name, email, phone, course, year_of_study, availability, earliest_start_date, role_applied, message, cv_path, created_at",
+    )
+    .order("created_at", { ascending: false });
+
+  if (error) {
+    throw new Error("Could not load applications. Please try again.");
+  }
+
+  return { allowed: true, applications: (data ?? []) as ApplicationRow[] };
+}
+
 function DashboardPage() {
   const navigate = useNavigate();
-  const fetchApplications = useServerFn(listApplications);
-  const fetchCvUrl = useServerFn(getCvDownloadUrl);
 
   const [search, setSearch] = useState("");
   const [course, setCourse] = useState("all");
@@ -43,7 +84,7 @@ function DashboardPage() {
 
   const { data, isLoading, error } = useQuery({
     queryKey: ["applications"],
-    queryFn: () => fetchApplications({}),
+    queryFn: fetchApplications,
   });
 
   const applications = data?.applications ?? [];
@@ -75,8 +116,13 @@ function DashboardPage() {
 
   async function downloadCv(path: string) {
     try {
-      const { url } = await fetchCvUrl({ data: { path } });
-      window.open(url, "_blank", "noopener");
+      const { data: signed, error } = await supabase.storage
+        .from("cvs")
+        .createSignedUrl(path, 120, { download: true });
+      if (error || !signed?.signedUrl) {
+        throw new Error("Could not prepare that CV download.");
+      }
+      window.open(signed.signedUrl, "_blank", "noopener");
     } catch (err) {
       toast.error(err instanceof Error ? err.message : "Could not download that CV.");
     }
