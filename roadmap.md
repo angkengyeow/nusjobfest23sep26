@@ -7,7 +7,7 @@
 - [x] Store applications + CV files (Lovable Cloud)
 - [x] Head metadata per route
 - [x] Recruiter dashboard: filter by course/availability/role, download CVs
-- [x] Recruiter sign in (@skyworksinc.com emails auto-approved)
+- [x] Recruiter sign in (@skyworks.com emails auto-approved)
 - [x] GitHub Pages export: static build (vite.config.ts, .github/workflows/deploy-pages.yml, .env.production, build:gh script)
 - [x] Browser-to-database CV upload so submissions work without a server
 - [x] Direct anonymous CV upload rule applied to storage

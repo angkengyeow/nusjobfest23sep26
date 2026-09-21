@@ -74,7 +74,7 @@ function AuthPage() {
         {mode === "signin" ? "Sign in" : "Create your account"}
       </h1>
       <p className="mt-3 text-muted-foreground">
-        For Skyworks staff only. Use your @skyworksinc.com work email to get access to candidate
+        For Skyworks staff only. Use your @skyworks.com work email to get access to candidate
         submissions.
       </p>
 
@@ -86,7 +86,7 @@ function AuthPage() {
             required
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            placeholder="you@skyworksinc.com"
+            placeholder="you@skyworks.com"
             className={fieldClass}
           />
         </label>
