@@ -8,7 +8,7 @@ import { defineConfig } from "@lovable.dev/vite-tanstack-config";
 
 // GitHub Pages build mode (see .github/workflows/deploy-pages.yml): the site is
 // fully client-side by then, so build a static SPA export instead of a server.
-const ghPages = process.env.GH_PAGES_BUILD === "1";
+const ghPages = process.env["GH_PAGES_BUILD"] === "1";
 
 export default defineConfig({
   tanstackStart: {
@@ -19,7 +19,7 @@ export default defineConfig({
   },
   ...(ghPages
     ? {
-        vite: { base: process.env.GH_PAGES_BASE || "/" },
+        vite: { base: process.env["GH_PAGES_BASE"] || "/" },
         nitro: { preset: "static" as const },
       }
     : {}),
