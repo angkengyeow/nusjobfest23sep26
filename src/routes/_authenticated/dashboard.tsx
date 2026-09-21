@@ -145,7 +145,20 @@ function DashboardPage() {
       window.open(signed.signedUrl, "_blank", "noopener");
     } catch (err) {
       toast.error(err instanceof Error ? err.message : "Could not download that CV.");
+  }
+
+  async function updateStatus(id: string, next: ApplicationStatus) {
+    setSavingId(id);
+    const { error } = await supabase.from("applications").update({ status: next }).eq("id", id);
+    setSavingId(null);
+    if (error) {
+      toast.error("Could not update that status. Please try again.");
+      return;
     }
+    toast.success(`Marked as ${STATUS_LABELS[next].toLowerCase()}.`);
+    await queryClient.invalidateQueries({ queryKey: ["applications"] });
+  }
+
   }
 
   async function signOut() {
@@ -185,7 +198,7 @@ function DashboardPage() {
         </button>
       </div>
 
-      <div className="mt-8 grid gap-4 border border-border bg-card p-5 sm:grid-cols-2 lg:grid-cols-4">
+      <div className="mt-8 grid gap-4 border border-border bg-card p-5 sm:grid-cols-2 lg:grid-cols-5">
         <label className="block">
           <span className="text-sm font-medium">Search</span>
           <input
@@ -232,6 +245,22 @@ function DashboardPage() {
             ))}
           </select>
         </label>
+        <label className="block">
+          <span className="text-sm font-medium">Status</span>
+          <select
+            value={statusFilter}
+            onChange={(e) => setStatusFilter(e.target.value)}
+            className={fieldClass}
+          >
+            <option value="all">All statuses</option>
+            {APPLICATION_STATUSES.map((s) => (
+              <option key={s} value={s}>
+                {STATUS_LABELS[s]}
+              </option>
+            ))}
+          </select>
+        </label>
+
       </div>
 
       {error ? (
@@ -265,7 +294,7 @@ function DashboardPage() {
                       {a.email} · {a.phone}
                     </p>
                   </div>
-                  <div className="flex items-center gap-3">
+                  <div className="flex flex-wrap items-center gap-3">
                     <span className="text-xs text-muted-foreground">
                       {new Date(a.created_at).toLocaleDateString("en-SG", {
                         day: "numeric",
@@ -273,6 +302,20 @@ function DashboardPage() {
                         year: "numeric",
                       })}
                     </span>
+                    <span className={statusBadgeClass(a.status)}>{STATUS_LABELS[a.status]}</span>
+                    <select
+                      value={a.status}
+                      onChange={(e) => updateStatus(a.id, e.target.value as ApplicationStatus)}
+                      disabled={savingId === a.id}
+                      className="rounded-sm border border-input bg-background px-2 py-2 text-xs outline-none focus:border-brand-blue focus:ring-2 focus:ring-ring/25 disabled:opacity-60"
+                      aria-label={`Status for ${a.full_name}`}
+                    >
+                      {APPLICATION_STATUSES.map((s) => (
+                        <option key={s} value={s}>
+                          {STATUS_LABELS[s]}
+                        </option>
+                      ))}
+                    </select>
                     {a.cv_path ? (
                       <button
                         onClick={() => downloadCv(a.cv_path!)}
@@ -284,6 +327,7 @@ function DashboardPage() {
                       <span className="text-xs text-muted-foreground">No CV</span>
                     )}
                   </div>
+
                 </div>
 
                 <dl className="mt-4 grid gap-3 text-sm sm:grid-cols-4">
