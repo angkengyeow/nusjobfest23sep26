@@ -142,27 +142,14 @@ function ApplyPage() {
     }
   }
 
-  if (referenceCode) {
+  if (submitted) {
     return (
       <div className="mx-auto max-w-2xl px-5 py-24 text-center">
         <h1 className="text-3xl sm:text-4xl">Application received</h1>
         <p className="mt-4 text-lg text-muted-foreground">
-          Thank you — your details and CV are with our recruiting team. We'll be in touch by email
-          after the career fest.
+          Thank you — your details and CV are with our recruiting team. If your profile fits one of
+          our openings, we'll email you directly with the next steps.
         </p>
-        <div className="mt-8 border border-border bg-card p-6">
-          <p className="text-xs font-semibold uppercase tracking-[0.22em] text-brand-blue">
-            Your reference code
-          </p>
-          <p className="mt-3 font-mono text-3xl font-semibold tracking-widest">{referenceCode}</p>
-          <p className="mt-3 text-sm text-muted-foreground">
-            Save this code. Enter it with your email on the{" "}
-            <Link to="/status" className="font-medium text-brand-blue hover:underline">
-              status page
-            </Link>{" "}
-            to see how your application is progressing.
-          </p>
-        </div>
       </div>
     );
   }
