@@ -46,7 +46,9 @@ type ApplicationRow = {
   message: string | null;
   cv_path: string | null;
   created_at: string;
+  status: ApplicationStatus;
 };
+
 
 const fieldClass =
   "mt-2 w-full rounded-sm border border-input bg-background px-3 py-2 text-sm outline-none focus:border-brand-blue focus:ring-2 focus:ring-ring/25";
@@ -88,11 +90,15 @@ function DashboardPage() {
   const [course, setCourse] = useState("all");
   const [availability, setAvailability] = useState("all");
   const [role, setRole] = useState("all");
+  const [statusFilter, setStatusFilter] = useState("all");
+  const [savingId, setSavingId] = useState<string | null>(null);
+  const queryClient = useQueryClient();
 
   const { data, isLoading, error } = useQuery({
     queryKey: ["applications"],
     queryFn: fetchApplications,
   });
+
 
   const applications = data?.applications ?? [];
 
@@ -110,6 +116,7 @@ function DashboardPage() {
       if (course !== "all" && a.course.trim() !== course) return false;
       if (availability !== "all" && a.availability.trim() !== availability) return false;
       if (role !== "all" && a.role_applied.trim() !== role) return false;
+      if (statusFilter !== "all" && a.status !== statusFilter) return false;
       if (search.trim()) {
         const q = search.trim().toLowerCase();
         const haystack = `${a.full_name} ${a.email} ${a.phone} ${a.course} ${a.availability} ${a.role_applied}`.toLowerCase();
@@ -117,7 +124,8 @@ function DashboardPage() {
       }
       return true;
     });
-  }, [applications, course, availability, role, search]);
+  }, [applications, course, availability, role, search, statusFilter]);
+
 
   const roles = useMemo(
     () => [...new Set(applications.map((a) => a.role_applied.trim()))].sort(),
@@ -145,6 +153,7 @@ function DashboardPage() {
       window.open(signed.signedUrl, "_blank", "noopener");
     } catch (err) {
       toast.error(err instanceof Error ? err.message : "Could not download that CV.");
+    }
   }
 
   async function updateStatus(id: string, next: ApplicationStatus) {
@@ -159,7 +168,6 @@ function DashboardPage() {
     await queryClient.invalidateQueries({ queryKey: ["applications"] });
   }
 
-  }
 
   async function signOut() {
     await supabase.auth.signOut();
