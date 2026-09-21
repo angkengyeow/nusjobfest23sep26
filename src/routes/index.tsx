@@ -41,8 +41,8 @@ function Index() {
             </h1>
             <p className="mt-5 max-w-[48ch] text-lg text-primary-foreground/90">
               It's great to meet you. Skyworks is hiring interns across RF design, manufacturing,
-              test and firmware — have a chat with our engineers at Suntec, then leave your CV with
-              us here. Everyone who applies hears back from a real person.
+              test and firmware — have a chat with our friend ambassadors at our booth, then leave
+              your CV with us here.
             </p>
 
             <dl className="mt-8 grid max-w-md grid-cols-2 gap-5 text-sm">
