@@ -47,8 +47,30 @@ function Index() {
                 <dd className="mt-1 font-semibold">23 September 2026</dd>
               </div>
               <div>
+                <dt className="text-primary-foreground/70">Time</dt>
+                <dd className="mt-1 font-semibold">10am – 5pm</dd>
+              </div>
+              <div>
                 <dt className="text-primary-foreground/70">Venue</dt>
-                <dd className="mt-1 font-semibold">Suntec Convention Centre</dd>
+                <dd className="mt-1 font-semibold">
+                  Suntec Convention Centre
+                  <span className="block font-normal text-primary-foreground/80">
+                    Level 4, Hall 401 &amp; 402
+                  </span>
+                </dd>
+              </div>
+              <div>
+                <dt className="text-primary-foreground/70">Fair info</dt>
+                <dd className="mt-1">
+                  <a
+                    href="https://nus.edu.sg/cfg/nuscareerfest"
+                    target="_blank"
+                    rel="noreferrer"
+                    className="font-semibold underline underline-offset-4 transition-colors hover:opacity-80"
+                  >
+                    NUS Career Fest page
+                  </a>
+                </dd>
               </div>
             </dl>
 

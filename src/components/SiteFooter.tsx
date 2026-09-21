@@ -8,7 +8,8 @@ export function SiteFooter() {
           SKYWORKS
         </p>
         <p className="text-sm text-muted-foreground">
-          NUS Career Fest 2026 · 23 September · Suntec Convention Centre · Internships only
+          NUS Career Fest 2026 · 23 September, 10am–5pm · Suntec Convention Centre, Level 4, Hall
+          401 &amp; 402 · Internships only
         </p>
         <Link
           to="/dashboard"
