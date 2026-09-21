@@ -19,11 +19,6 @@ export function SiteHeader() {
             alt="Skyworks"
             className="h-9 w-auto shrink-0"
           />
-          <span className="hidden flex-col leading-none min-[420px]:flex">
-            <span className="mt-1 text-[10px] font-medium uppercase tracking-[0.2em] text-muted-foreground">
-              Internship Programme
-            </span>
-          </span>
         </Link>
 
         <span className="hidden h-8 w-px bg-border sm:block" aria-hidden="true" />
