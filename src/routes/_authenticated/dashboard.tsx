@@ -139,7 +139,7 @@ function DashboardPage() {
         <h1 className="text-3xl">No access yet</h1>
         <p className="mt-4 text-muted-foreground">
           Your account isn't marked as part of the recruiting team. Sign in with your
-          @skyworksinc.com work email to review applications.
+          @skyworks.com work email to review applications.
         </p>
         <button onClick={signOut} className="mt-6 text-sm font-medium text-brand-blue hover:underline">
           Sign out
