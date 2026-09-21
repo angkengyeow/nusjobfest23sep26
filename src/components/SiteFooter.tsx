@@ -1,6 +1,6 @@
 import { Link } from "@tanstack/react-router";
-import skyworksLogo from "@/assets/skyworks-logo.png.asset.json";
-import nusLogo from "@/assets/nus-cfg-logo.png.asset.json";
+import skyworksLogo from "@/assets/skyworks-logo.png";
+import nusLogo from "@/assets/nus-cfg-logo.png";
 
 export function SiteFooter() {
   return (
@@ -8,13 +8,13 @@ export function SiteFooter() {
       <div className="mx-auto flex max-w-6xl flex-col gap-3 px-5 py-9 sm:flex-row sm:items-center sm:justify-between">
         <div className="flex items-center gap-4">
           <img
-            src={skyworksLogo.url}
+            src={skyworksLogo}
             alt="Skyworks"
             className="h-7 w-auto"
           />
           <span className="h-6 w-px bg-border" aria-hidden="true" />
           <img
-            src={nusLogo.url}
+            src={nusLogo}
             alt="NUS · Centre for Future-ready Graduates"
             className="h-8 w-auto"
           />
