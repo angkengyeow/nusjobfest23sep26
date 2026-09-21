@@ -153,7 +153,7 @@ function ApplyPage() {
         </p>
         <Link
           to="/roles"
-          className="mt-6 inline-flex items-center rounded-sm bg-primary px-7 py-3 text-sm font-semibold text-primary-foreground transition-colors hover:bg-brand-blue-deep"
+          className="mt-6 inline-flex items-center rounded-xl bg-primary px-7 py-3.5 text-sm font-bold text-primary-foreground transition-all hover:bg-ink hover:shadow-xl"
         >
           See all internships
         </Link>
@@ -173,7 +173,7 @@ function ApplyPage() {
         second role of interest in the message box.
       </p>
 
-      <form onSubmit={handleSubmit} className="mt-10 border border-border bg-card p-6 sm:p-8">
+      <form onSubmit={handleSubmit} className="mt-10 rounded-3xl border border-border bg-card p-6 shadow-panel sm:p-10">
         <div className="grid gap-5 sm:grid-cols-2">
           <label className="block">
             <span className={labelClass}>Full name</span>
@@ -248,7 +248,7 @@ function ApplyPage() {
 
         <div className="mt-5">
           <span className={labelClass}>Upload CV</span>
-          <label className="mt-2 flex cursor-pointer flex-col items-center justify-center border border-dashed border-input bg-secondary px-4 py-8 text-center transition-colors hover:border-brand-blue">
+          <label className="mt-2 flex cursor-pointer flex-col items-center justify-center rounded-2xl border-2 border-dashed border-input bg-secondary px-4 py-9 text-center transition-colors hover:border-brand-blue hover:bg-brand-blue/5">
             <span className="text-sm font-semibold text-brand-blue">
               {cvFile ? cvFile.name : "Choose a file"}
             </span>
@@ -278,7 +278,7 @@ function ApplyPage() {
         <button
           type="submit"
           disabled={submitting}
-          className="mt-7 w-full rounded-sm bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground transition-colors hover:bg-brand-blue-deep disabled:opacity-60"
+          className="mt-7 w-full rounded-xl bg-primary px-6 py-3.5 text-sm font-bold text-primary-foreground transition-all hover:bg-ink hover:shadow-xl disabled:opacity-60"
         >
           {submitting ? "Submitting…" : "Submit application"}
         </button>
