@@ -17,10 +17,5 @@ export default defineConfig({
     server: { entry: "server" },
     ...(ghPages ? { spa: { enabled: true } } : {}),
   },
-  ...(ghPages
-    ? {
-        vite: { base: process.env["GH_PAGES_BASE"] || "/" },
-        nitro: { preset: "static" as const },
-      }
-    : {}),
+  ...(ghPages ? { vite: { base: process.env["GH_PAGES_BASE"] || "/" } } : {}),
 });
