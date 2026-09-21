@@ -30,7 +30,8 @@ const badgeStyles: Record<ApplicationStatus, string> = {
   shortlisted: "bg-brand-blue/10 text-brand-blue",
   interviewed: "bg-brand-blue/15 text-brand-blue-deep",
   rejected: "bg-destructive/10 text-destructive",
-  hired: "bg-brand-green/15 text-brand-green-deep",
+  hired: "bg-brand-green/20 text-foreground",
+
 };
 
 export function statusBadgeClass(status: ApplicationStatus) {
