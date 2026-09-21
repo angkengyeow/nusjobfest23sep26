@@ -4,7 +4,7 @@ import nusLogo from "@/assets/nus-cfg-logo.png.asset.json";
 
 export function SiteFooter() {
   return (
-    <footer className="border-t border-border bg-secondary">
+    <footer className="border-t border-border bg-card">
       <div className="mx-auto flex max-w-6xl flex-col gap-3 px-5 py-9 sm:flex-row sm:items-center sm:justify-between">
         <div className="flex items-center gap-4">
           <img
