@@ -24,12 +24,21 @@ export function SiteFooter() {
           23 September, 10am–5pm · Suntec Convention Centre, Level 4, Hall
           401 &amp; 402 · Internships only
         </p>
-        <Link
-          to="/dashboard"
-          className="text-sm font-medium text-muted-foreground transition-colors hover:text-brand-blue"
-        >
-          Recruiter login
-        </Link>
+        <div className="flex items-center gap-4">
+          <Link
+            to="/privacy"
+            className="text-sm font-medium text-muted-foreground transition-colors hover:text-brand-blue"
+          >
+            Privacy notice
+          </Link>
+          <span className="h-4 w-px bg-border" aria-hidden="true" />
+          <Link
+            to="/dashboard"
+            className="text-sm font-medium text-muted-foreground transition-colors hover:text-brand-blue"
+          >
+            Recruiter login
+          </Link>
+        </div>
       </div>
     </footer>
   );
