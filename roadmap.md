@@ -18,3 +18,5 @@
 - [x] Application status: recruiter controls (new/shortlisted/interviewed/rejected/hired) + student status lookup by email + private reference code (no guessing)
 
 
+- [x] PDPA: consent tick-box on the form + /privacy notice (purpose, access, 12-month retention, deletion rights)
+- [ ] Add the real Skyworks DPO / recruiting contact email to /privacy

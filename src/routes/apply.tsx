@@ -41,6 +41,7 @@ function ApplyPage() {
   const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [cvFile, setCvFile] = useState<File | null>(null);
+  const [consent, setConsent] = useState(false);
 
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
@@ -48,6 +49,10 @@ function ApplyPage() {
     const form = event.currentTarget;
     const values = new FormData(form);
 
+    if (!consent) {
+      toast.error("Please agree to the use of your details before submitting.");
+      return;
+    }
     if (!cvFile) {
       toast.error("Please attach your CV before submitting.");
       return;
@@ -275,9 +280,28 @@ function ApplyPage() {
           />
         </label>
 
+        <label className="mt-6 flex cursor-pointer items-start gap-3 rounded-2xl border border-border bg-secondary p-4">
+          <input
+            type="checkbox"
+            checked={consent}
+            onChange={(event) => setConsent(event.target.checked)}
+            className="mt-0.5 h-4 w-4 shrink-0 accent-brand-blue"
+          />
+          <span className="text-sm text-muted-foreground">
+            I agree to Skyworks collecting and using my details and CV to assess me for internship
+            opportunities and to contact me about them. I understand my details are kept for up to 12
+            months after NUS Career Fest 2026 and that I can ask for them to be corrected or deleted
+            at any time. See the{" "}
+            <Link to="/privacy" className="font-semibold text-brand-blue hover:underline">
+              privacy notice
+            </Link>
+            .
+          </span>
+        </label>
+
         <button
           type="submit"
-          disabled={submitting}
+          disabled={submitting || !consent}
           className="mt-7 w-full rounded-xl bg-primary px-6 py-3.5 text-sm font-bold text-primary-foreground transition-all hover:bg-ink hover:shadow-xl disabled:opacity-60"
         >
           {submitting ? "Submitting…" : "Submit application"}
